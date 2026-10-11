@@ -1,0 +1,35 @@
+{% extends "admin/base_site.html" %}
+{% block title %}Students &amp; payments | {{ site_title }}{% endblock %}
+{% block breadcrumbs %}<div class="breadcrumbs"><a href="{% url 'admin:index' %}">Home</a> &rsaquo; Dashboard</div>{% endblock %}
+{% block content %}
+<style>
+  .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:12px 0 24px}
+  .stat{background:#fff;border:1px solid #e6e9f2;border-radius:12px;padding:16px}
+  .stat span{display:block;font-size:1.8rem;font-weight:800;color:#0f2f8f}
+  table.dash{width:100%;border-collapse:collapse;background:#fff}
+  table.dash th,table.dash td{padding:8px 10px;border-bottom:1px solid #e6e9f2;text-align:left;font-size:.92rem}
+</style>
+<h1>Students &amp; payments</h1>
+<div class="stat-grid">
+  {% for label, value in stats %}<div class="stat"><span>{{ value }}</span>{{ label }}</div>{% endfor %}
+</div>
+<p>Search, revoke or restore students in <a href="{% url 'admin:academy_enrollment_changelist' %}">Students</a>. Search by email, Paystack reference or Telegram ID.</p>
+<h2>Latest 25 students</h2>
+<table class="dash">
+  <thead><tr><th>Email</th><th>Reference</th><th>Telegram ID</th><th>Status</th><th>Purchased</th><th>Expires</th></tr></thead>
+  <tbody>
+  {% for e in recent %}
+    <tr>
+      <td>{{ e.email }}</td>
+      <td>{{ e.payment_id }}</td>
+      <td>{{ e.telegram_user_id|default:"not connected" }}</td>
+      <td>{{ e.get_status_display }}</td>
+      <td>{{ e.purchased_at|date:"j M Y, H:i" }}</td>
+      <td>{{ e.access_expires_at|date:"j M Y"|default:"-" }}</td>
+    </tr>
+  {% empty %}
+    <tr><td colspan="6">No students yet.</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

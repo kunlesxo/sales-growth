@@ -1,0 +1,138 @@
+{% load static %}<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ course.name }} | {{ course.brand }}</title>
+<meta name="description" content="A 5-day practical masterclass on sourcing Montessori and learning resources. {{ ngn_label }}. Starts {{ course.start_label }}.">
+<meta name="theme-color" content="#1e4fd8">
+<link rel="icon" href="{% static 'academy/img/logo.png' %}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'academy/css/site.css' %}">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap bar">
+    <a href="#top"><img class="logo" src="{% static 'academy/img/logo.png' %}" alt="" onerror="this.style.visibility='hidden'"></a>
+    <a class="btn gold" href="{{ paystack_url }}">Secure your seat</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="banner">
+        <img src="{% static 'academy/img/banner.png' %}" alt="" onerror="this.remove()">
+        <div class="banner-text">
+          <span class="pill">Your instructor</span>
+          <p class="host">{{ course.instructor }}</p>
+        </div>
+      </div>
+      <div>
+        <p class="eyebrow">5-day practical masterclass</p>
+        <h1>{{ course.name }}</h1>
+        <p class="lead">Learn to source Montessori and learning resources directly from China, work out your real landed cost, and import with confidence.</p>
+        <ul class="facts">
+          <li>Starts {{ course.start_label }}</li>
+          <li>Recorded practical lessons, Day 1 to Day 5</li>
+          <li>12 months of access to the classroom and discussion group</li>
+        </ul>
+        <div class="price-row">
+          <span class="price">{{ ngn_label }}</span>
+          <a class="btn gold big" href="{{ paystack_url }}">ENROLL NOW</a>
+        </div>
+        {% if ghs_enabled %}<p class="fine" style="margin-top:12px">Paying from Ghana? Pay {{ ghs_label }} by card or mobile money on the same secure page.</p>{% endif %}
+      </div>
+    </div>
+  </section>
+
+  <section class="alt">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">What you get</p>
+        <h2>Everything you need to start sourcing</h2>
+      </div>
+      <div class="cards">
+        <div class="card"><span class="num">1</span><h3>Source directly from China</h3><p>Find and vet suppliers yourself, without middlemen.</p></div>
+        <div class="card"><span class="num">2</span><h3>Know your true landed cost</h3><p>Work out what every item really costs before you buy.</p></div>
+        <div class="card"><span class="num">3</span><h3>Import with confidence</h3><p>Follow a clear process from order to delivery.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">Where you will source</p>
+        <h2>Learn the platforms that matter</h2>
+        <p class="lead">The masterclass covers five Chinese sourcing and trading platforms.</p>
+      </div>
+      <ul class="platforms">
+        <li>Alibaba.com</li>
+        <li>Taobao</li>
+        <li>Yiwugo</li>
+        <li>Made-in-China.com</li>
+        <li>DHgate</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="alt">
+    <div class="wrap narrow">
+      <div class="head">
+        <p class="eyebrow">Your learning space</p>
+        <h2>Learn in a real sourcing set-up</h2>
+      </div>
+      <figure class="surround">
+        <img src="{% static 'academy/img/surroundings.png' %}" alt="Abraham Precious's sourcing and learning-resources workspace" onerror="this.parentElement.style.minHeight='220px'; this.remove()">
+        <figcaption>Lessons are filmed in a working Montessori and learning-resources set-up.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  {% if ghs_enabled %}
+  <section>
+    <div class="wrap narrow">
+      <p class="eyebrow">Ghana</p>
+      <h2>Paying from Ghana?</h2>
+      <p>Pay {{ ghs_label }} in cedis by card or mobile money on the secure payment page. Your access is confirmed the same way.</p>
+      <a class="btn blue" href="{{ paystack_url }}">Pay in GH₵ now</a>
+    </div>
+  </section>
+  {% endif %}
+
+  <section class="alt">
+    <div class="wrap narrow" style="text-align:center">
+      <h2>Your seat is waiting</h2>
+      <p class="lead">{{ course.start_label }}</p>
+      <a class="btn gold big" href="{{ paystack_url }}">PAY {{ ngn_label }} · ENROLL NOW</a>
+      <form class="recover" action="{% url 'success' %}" method="get" style="text-align:left">
+        <label for="ref">Already paid? Enter your payment reference to get your access</label>
+        <div class="row">
+          <input id="ref" name="reference" placeholder="Your Paystack reference" required maxlength="50" pattern="[A-Za-z0-9_\-]{4,50}">
+          <button class="btn blue" type="submit">Get my access</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<div class="sticky-pay" role="region" aria-label="Enroll now">
+  <span>{{ ngn_label }} · 12 months access</span>
+  <a class="btn gold" href="{{ paystack_url }}">Secure your seat</a>
+</div>
+
+<footer class="foot">
+  <div class="wrap">
+    <p>Trading name: Sales Growth Academy · Legal entity: Books Roundabout Nigeria Limited</p>
+    {% if support_url %}<p><a href="{{ support_url }}">Contact support</a></p>{% endif %}
+  </div>
+</footer>
+
+</body>
+</html>
