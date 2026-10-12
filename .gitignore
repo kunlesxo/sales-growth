@@ -7,3 +7,4 @@ venv/
 staticfiles/
 *.log
 .DS_Store
+*.stackdump
