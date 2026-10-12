@@ -224,7 +224,7 @@ class PageTests(TestCase):
     def test_landing_page_has_pay_button_and_no_retired_platform(self):
         response = self.client.get("/")
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Secure your seat")
+        self.assertContains(response, settings.PAYSTACK_PAGE_URL)
         self.assertContains(response, "Abraham Precious")
         self.assertNotContains(response, "16" + "88")  # the retired platform name must never appear
 
@@ -236,8 +236,8 @@ class PageTests(TestCase):
     def test_success_page_shows_pending_for_unknown_reference(self):
         with patch("academy.services.paystack.verify_transaction", return_value=None):
             response = self.client.get("/success/?reference=SGA-NOPE-0001")
-        self.assertContains(response, "Check Payment Again")
-        self.assertNotContains(response, "GET MY TELEGRAM ACCESS")
+        self.assertContains(response, "reference=SGA-NOPE-0001")  # the retry link keeps the reference
+        self.assertNotContains(response, "t.me/")  # no Telegram link until Paystack confirms payment
 
     def test_health_check(self):
         self.assertEqual(self.client.get("/health/").status_code, 200)
