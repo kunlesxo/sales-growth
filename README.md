@@ -57,7 +57,7 @@ The migration step matters: the project is delivered without a generated migrati
    ```bash
    git init && git add -A && git commit -m "Initial academy backend"
    git branch -M main
-   git remote add origin https://github.com/<you>/<repo>.git
+   git remote add origin https://github.com/kunlesxo/sales-growth.git
    git push -u origin main
    ```
 2. In Railway, **New Project > Deploy from GitHub repo**, and pick the repo.

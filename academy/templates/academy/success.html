@@ -6,42 +6,56 @@
 <meta name="robots" content="noindex">
 <title>Payment | {{ course.brand }}</title>
 <link rel="icon" href="{% static 'academy/img/logo.png' %}">
-<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{% static 'academy/css/site.css' %}">
 </head>
 <body>
 
-<header class="top">
+<header class="top is-scrolled">
   <div class="wrap bar">
-    <a href="{% url 'landing' %}"><img class="logo" src="{% static 'academy/img/logo.png' %}" alt="" onerror="this.style.visibility='hidden'"></a>
-    <a class="btn gold" href="{% url 'landing' %}">Back to course</a>
+    <a href="{% url 'landing' %}" aria-label="{{ course.brand }}"><img class="logo" src="{% static 'academy/img/sales logo.png' %}" alt="{{ course.brand }}" onerror="this.style.visibility='hidden'"></a>
+    <a class="btn ghost sm" href="{% url 'landing' %}">Back to course</a>
   </div>
 </header>
 
 <main class="wrap narrow success">
   {% if state == "verified" %}
-    <p class="eyebrow">Payment verified</p>
-    <h1>PAYMENT SUCCESSFUL 🎉</h1>
-    <p class="lead">Your seat for the {{ course.brand }} {{ course.name }} has been secured.</p>
-    <a class="btn gold big" href="{{ deep_link }}">GET MY TELEGRAM ACCESS</a>
-    <p class="fine" style="margin-top:18px">Tap the button, then press Start in Telegram. Your links appear there.
-      You can come back to this page any time with your reference, so you do not need to finish now.</p>
+    <div class="status-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+    </div>
+    <h1>Payment successful</h1>
+    <p class="lead">Your seat for the {{ course.brand }} {{ course.name }} is secured.</p>
+    <a class="btn gold lg" href="{{ deep_link }}">Get my Telegram access</a>
+    <ol class="next">
+      <li>Tap the button above to open Telegram.</li>
+      <li>Press Start in the chat.</li>
+      <li>Your classroom links appear there.</li>
+    </ol>
+    <p class="fine note">You can return to this page any time with your payment reference, so you don't need to finish now.</p>
 
   {% elif state == "pending" %}
-    <h1>We couldn't verify your course payment yet</h1>
-    <p class="lead">If you have just completed payment, please wait a moment and tap Check Payment Again.</p>
-    <a class="btn blue big" href="{% url 'success' %}?reference={{ reference|urlencode }}">Check Payment Again</a>
-    {% if support_url %}<p class="fine" style="margin-top:18px">If the problem continues, <a href="{{ support_url }}">contact Sales Growth Academy support</a>.</p>{% endif %}
+    <div class="status-icon wait" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+    </div>
+    <h1>We couldn't verify your payment yet</h1>
+    <p class="lead">If you just completed payment, wait a moment, then check again.</p>
+    <a class="btn blue lg" href="{% url 'success' %}?reference={{ reference|urlencode }}">Check payment again</a>
+    {% if support_url %}<p class="fine note">Still not working? <a href="{{ support_url }}">Contact {{ course.brand }} support</a>.</p>{% endif %}
 
   {% elif state == "busy" %}
+    <div class="status-icon wait" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+    </div>
     <h1>Almost there</h1>
-    <p class="lead">Our payment checker is busy right now. Please tap Check Payment Again in a moment.</p>
-    <a class="btn blue big" href="{% url 'success' %}?reference={{ reference|urlencode }}">Check Payment Again</a>
+    <p class="lead">Our payment checker is busy. Check again in a moment.</p>
+    <a class="btn blue lg" href="{% url 'success' %}?reference={{ reference|urlencode }}">Check payment again</a>
 
   {% else %}
     <h1>Enter your payment reference</h1>
-    <p class="lead">Your reference is on the Paystack receipt. Go back to the course page to enter it, or pay for your seat first.</p>
-    <a class="btn blue big" href="{% url 'landing' %}">Go to the course page</a>
+    <p class="lead">You'll find your reference on the Paystack receipt. Enter it on the course page, or pay for your seat first.</p>
+    <a class="btn blue lg" href="{% url 'landing' %}">Go to the course page</a>
   {% endif %}
 </main>
 

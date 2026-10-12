@@ -3,33 +3,46 @@
 {% block breadcrumbs %}<div class="breadcrumbs"><a href="{% url 'admin:index' %}">Home</a> &rsaquo; Dashboard</div>{% endblock %}
 {% block content %}
 <style>
-  .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:12px 0 24px}
-  .stat{background:#fff;border:1px solid #e6e9f2;border-radius:12px;padding:16px}
-  .stat span{display:block;font-size:1.8rem;font-weight:800;color:#0f2f8f}
-  table.dash{width:100%;border-collapse:collapse;background:#fff}
-  table.dash th,table.dash td{padding:8px 10px;border-bottom:1px solid #e6e9f2;text-align:left;font-size:.92rem}
+  .sga{--navy:#0b2a6f;--gold:#f2b01e;--line:var(--border-color,#e4e1d8);--card:var(--body-bg,#fff);--mut:var(--body-quiet-color,#55627f)}
+  .sga .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin:16px 0 32px}
+  .sga .stat{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--gold);border-radius:10px;padding:18px 20px;color:var(--mut);font-size:.9rem}
+  .sga .stat span{display:block;margin-bottom:2px;font-size:2rem;font-weight:700;line-height:1.2;color:var(--navy)}
+  .sga .help{margin:0 0 28px;color:var(--mut)}
+  .sga h2{margin:0 0 12px;font-size:1.15rem}
+  .sga .table-wrap{overflow-x:auto;background:var(--card);border:1px solid var(--line);border-radius:10px}
+  .sga table.dash{width:100%;min-width:720px;border-collapse:collapse}
+  .sga table.dash th{padding:12px 16px;background:var(--navy);color:#fff;font-size:.8rem;font-weight:600;text-align:left;white-space:nowrap}
+  .sga table.dash td{padding:12px 16px;border-bottom:1px solid var(--line);font-size:.92rem;text-align:left}
+  .sga table.dash tr:last-child td{border-bottom:0}
+  .sga table.dash tbody tr:hover{background:rgba(242,176,30,.08)}
+  .sga .muted{color:var(--mut)}
+  .sga .ref{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.85rem}
 </style>
-<h1>Students &amp; payments</h1>
-<div class="stat-grid">
-  {% for label, value in stats %}<div class="stat"><span>{{ value }}</span>{{ label }}</div>{% endfor %}
+<div class="sga">
+  <h1>Students &amp; payments</h1>
+  <div class="stat-grid">
+    {% for label, value in stats %}<div class="stat"><span>{{ value }}</span>{{ label }}</div>{% endfor %}
+  </div>
+  <p class="help">Search, revoke or restore students in <a href="{% url 'admin:academy_enrollment_changelist' %}">Students</a>. Search by email, Paystack reference or Telegram ID.</p>
+  <h2>Latest 25 students</h2>
+  <div class="table-wrap">
+    <table class="dash">
+      <thead><tr><th>Email</th><th>Reference</th><th>Telegram ID</th><th>Status</th><th>Purchased</th><th>Expires</th></tr></thead>
+      <tbody>
+      {% for e in recent %}
+        <tr>
+          <td>{{ e.email }}</td>
+          <td class="ref">{{ e.payment_id }}</td>
+          <td>{% if e.telegram_user_id %}{{ e.telegram_user_id }}{% else %}<span class="muted">Not connected</span>{% endif %}</td>
+          <td>{{ e.get_status_display }}</td>
+          <td>{{ e.purchased_at|date:"j M Y, H:i" }}</td>
+          <td>{% if e.access_expires_at %}{{ e.access_expires_at|date:"j M Y" }}{% else %}<span class="muted">-</span>{% endif %}</td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="6" class="muted">No students yet.</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
 </div>
-<p>Search, revoke or restore students in <a href="{% url 'admin:academy_enrollment_changelist' %}">Students</a>. Search by email, Paystack reference or Telegram ID.</p>
-<h2>Latest 25 students</h2>
-<table class="dash">
-  <thead><tr><th>Email</th><th>Reference</th><th>Telegram ID</th><th>Status</th><th>Purchased</th><th>Expires</th></tr></thead>
-  <tbody>
-  {% for e in recent %}
-    <tr>
-      <td>{{ e.email }}</td>
-      <td>{{ e.payment_id }}</td>
-      <td>{{ e.telegram_user_id|default:"not connected" }}</td>
-      <td>{{ e.get_status_display }}</td>
-      <td>{{ e.purchased_at|date:"j M Y, H:i" }}</td>
-      <td>{{ e.access_expires_at|date:"j M Y"|default:"-" }}</td>
-    </tr>
-  {% empty %}
-    <tr><td colspan="6">No students yet.</td></tr>
-  {% endfor %}
-  </tbody>
-</table>
 {% endblock %}
