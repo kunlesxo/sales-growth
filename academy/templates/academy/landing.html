@@ -5,24 +5,184 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{{ course.name }} | {{ course.brand }}</title>
 <meta name="description" content="A 5-day practical masterclass on sourcing Montessori and learning resources from China. {{ ngn_label }}. Starts {{ course.start_label }}.">
-<meta name="theme-color" content="#0b2a6f">
-<link rel="icon" href="{% static 'academy/img/logo.png' %}">
+<meta name="theme-color" content="#2E1A11">
+<link rel="icon" href="{% static 'academy/img/sales-logo.png' %}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{% static 'academy/css/site.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --brown-deep:#2E1A11;
+    --brown:#4A2A1C;
+    --brown-mid:#6B4632;
+    --peach:#F1C7A3;
+    --peach-soft:#F8DFC4;
+    --cream:#FBF3E8;
+    --cream-card:#FFFCF7;
+    --ink:#2A1C14;
+    --muted:#6B5645;
+    --line:rgba(42,28,20,.12);
+    --radius:16px;
+    --serif:"Fraunces",Georgia,"Times New Roman",serif;
+    --sans:"Karla",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:var(--sans);background:var(--cream);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;padding-bottom:84px}
+  img{max-width:100%;display:block}
+  a{color:inherit}
+  h1,h2,h3{font-family:var(--serif);margin:0;color:var(--brown-deep);line-height:1.15;font-weight:600}
+  h3{font-family:var(--sans);font-size:17px;font-weight:700;margin-bottom:4px}
+  p{margin:0 0 1em}
+  :focus-visible{outline:3px solid var(--peach);outline-offset:3px}
+
+  .wrap{max-width:1120px;margin:0 auto;padding:0 22px}
+  .narrow{max-width:800px}
+  section{padding:72px 0}
+  @media(min-width:900px){section{padding:96px 0}.wrap{padding:0 28px}}
+
+  .bg-cream{background:var(--cream)}
+  .bg-card{background:var(--cream-card);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .bg-brown{background:var(--brown-deep);color:var(--peach-soft)}
+  .bg-mid{background:var(--brown);color:var(--cream)}
+
+  .head{max-width:44rem;margin-bottom:40px}
+  .head h2{font-size:clamp(1.9rem,3.6vw,2.5rem);margin-bottom:12px}
+  .lead{font-size:1.1rem;color:var(--muted)}
+  .center{text-align:center}
+  .fine{font-size:14px;color:var(--muted)}
+
+  /* Buttons */
+  .btn{display:inline-block;text-align:center;font-family:var(--sans);font-weight:700;font-size:16px;line-height:1.2;padding:14px 26px;border:0;border-radius:999px;cursor:pointer;text-decoration:none;transition:background .2s,transform .15s,box-shadow .2s}
+  .btn:active{transform:scale(.98)}
+  .btn-peach{background:var(--peach);color:var(--brown-deep)}
+  .btn-peach:hover{background:var(--peach-soft)}
+  .btn-brown{background:var(--brown-deep);color:var(--cream);box-shadow:0 14px 26px -12px rgba(46,26,17,.55)}
+  .btn-brown:hover{background:var(--brown)}
+  .btn-line{background:transparent;color:var(--cream);box-shadow:inset 0 0 0 1.5px var(--peach)}
+  .btn-line:hover{background:rgba(241,199,163,.12)}
+  .btn-sm{padding:10px 18px;font-size:15px}
+  .btn-lg{padding:17px 30px;font-size:17px}
+  .btn-block{display:block;width:100%}
+
+  /* Header (sticky, same behaviour as before) */
+  header.top{position:sticky;top:0;z-index:50;background:var(--brown-deep);border-bottom:1px solid transparent;transition:border-color .3s,box-shadow .3s}
+  header.top.is-scrolled{border-bottom-color:rgba(241,199,163,.18);box-shadow:0 10px 24px -18px rgba(0,0,0,.6)}
+  .bar{display:flex;align-items:center;justify-content:space-between;gap:16px;height:76px}
+  .logo-wrap{display:inline-flex;background:var(--cream);border-radius:10px;padding:6px 12px}
+  .logo{height:40px;width:auto}
+  .nav{display:flex;align-items:center;gap:26px}
+  .nav a.link{color:var(--peach-soft);font-weight:600;font-size:15px;text-decoration:none}
+  .nav a.link:hover{color:#fff}
+  @media(max-width:640px){.nav a.link{display:none}}
+
+  /* Hero */
+  .hero{background:radial-gradient(90% 80% at 0% 0%,#5a3623 0%,transparent 60%),var(--brown-deep);color:var(--cream);padding:56px 0 80px}
+  .hero-grid{display:grid;gap:48px;align-items:center}
+  @media(min-width:860px){
+    .hero{padding:80px 0 104px}
+    .hero-grid{grid-template-columns:1.25fr minmax(0,380px);gap:72px}
+  }
+  .kicker{color:var(--peach);font-weight:700;font-size:14px;letter-spacing:.04em;margin:0 0 18px}
+  .hero h1{color:#fff;font-size:clamp(2.1rem,5vw,3.3rem);margin-bottom:18px}
+  .hero .lead{color:var(--peach-soft);font-size:1.12rem;max-width:36em}
+  .cta-row{display:flex;flex-wrap:wrap;gap:12px;margin:30px 0 24px}
+  .assure{display:flex;flex-wrap:wrap;gap:8px 22px;list-style:none;margin:0;padding:0;font-size:15px;color:var(--peach-soft)}
+  .assure li{padding-left:22px;position:relative}
+  .assure li::before{content:"";position:absolute;left:0;top:.55em;width:11px;height:6px;border-left:2px solid var(--peach);border-bottom:2px solid var(--peach);transform:rotate(-45deg)}
+  .hero .fine{color:var(--peach-soft);opacity:.85;margin-top:16px}
+  .reel{position:relative;width:100%;max-width:380px;margin:0 auto;aspect-ratio:9/16;max-height:640px;border-radius:18px;overflow:hidden;background:var(--brown);box-shadow:0 30px 60px -20px rgba(0,0,0,.6)}
+  .reel img{width:100%;height:100%;object-fit:cover}
+  .reel::after{content:"";position:absolute;inset:auto 0 0 0;height:50%;background:linear-gradient(180deg,transparent,rgba(46,26,17,.95));pointer-events:none}
+  .founder{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:0 24px 26px}
+  .founder strong{display:block;font-family:var(--serif);font-size:clamp(1.5rem,3.4vw,1.9rem);line-height:1.15;color:var(--peach);text-shadow:0 2px 12px rgba(0,0,0,.45)}
+  .founder span{display:block;margin-top:6px;font-weight:600;font-size:15px;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.5)}
+
+  /* Outcomes */
+  .outcomes{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+  .outcomes article{padding:30px 28px;background:var(--cream);border:1px solid var(--line);border-radius:14px}
+  .outcomes p{margin:0;color:var(--muted)}
+
+  /* Platforms (dark) */
+  .dark{background:var(--brown-deep);color:var(--peach-soft)}
+  .dark h2{color:#fff}
+  .dark .lead{color:rgba(251,243,232,.8)}
+  .split{display:grid;gap:40px}
+  @media(min-width:900px){.split{grid-template-columns:1fr 1.1fr;gap:72px;align-items:start}}
+  .platforms{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+  .platforms li{display:grid;gap:4px;padding:18px 22px;border:1px solid rgba(241,199,163,.18);border-radius:12px;background:rgba(251,243,232,.03)}
+  .platforms strong{font-family:var(--serif);font-size:1.1rem;color:var(--peach)}
+  .platforms span{color:rgba(251,243,232,.82);font-size:15px}
+
+  /* Curriculum */
+  .days{list-style:none;margin:0;padding:0;display:grid;gap:12px;max-width:760px}
+  .days li{display:flex;gap:18px;align-items:flex-start;padding:20px 22px;background:var(--cream-card);border:1px solid var(--line);border-radius:14px}
+  .day{flex:none;font-family:var(--serif);font-weight:600;font-size:15px;color:var(--peach);background:var(--brown-deep);border-radius:8px;padding:7px 12px;min-width:68px;text-align:center}
+  .days p{margin:0;color:var(--muted);font-size:15px}
+
+  /* Ghana */
+  .ghana{background:var(--cream-card);border:1px solid var(--line);border-radius:var(--radius);padding:30px 28px}
+  .ghana p{color:var(--muted)}
+
+  /* Enroll */
+  .enroll-card{background:var(--cream-card);border:1px solid var(--line);border-top:5px solid var(--brown-deep);border-radius:18px;padding:44px 26px;text-align:center;box-shadow:0 20px 50px -28px rgba(46,26,17,.4)}
+  .enroll-card h2{margin-bottom:6px}
+  .enroll-card .price{margin:10px 0 4px;font-family:var(--serif);font-weight:600;font-size:clamp(2.4rem,6vw,3.2rem);color:var(--brown-deep);line-height:1.1}
+  .price-note{color:var(--muted);margin-bottom:28px}
+  .enroll-meta{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:0 0 28px;text-align:left;border:1px solid var(--line);border-radius:var(--radius);background:var(--cream)}
+  .enroll-meta div{padding:16px 18px;border-bottom:1px solid var(--line)}
+  .enroll-meta div:nth-child(odd){border-right:1px solid var(--line)}
+  .enroll-meta div:nth-last-child(-n+2){border-bottom:0}
+  .enroll-meta dt{font-size:13px;color:var(--muted)}
+  .enroll-meta dd{margin:2px 0 0;font-weight:700;color:var(--brown-deep)}
+  @media(max-width:640px){
+    .enroll-meta{grid-template-columns:1fr}
+    .enroll-meta div,.enroll-meta div:nth-child(odd){border-right:0;border-bottom:1px solid var(--line)}
+    .enroll-meta div:last-child{border-bottom:0}
+    .cta-row .btn{width:100%}
+  }
+  .recover{margin:36px 0 0;padding-top:28px;border-top:1px solid var(--line);text-align:left}
+  .recover label{display:block;font-weight:700;margin-bottom:10px;font-size:15px;color:var(--brown-deep)}
+  .recover .row{display:flex;flex-wrap:wrap;gap:10px}
+  .recover input{flex:1 1 200px;padding:13px 16px;border:1px solid rgba(42,28,20,.22);border-radius:10px;font:inherit;background:#fff;color:var(--ink)}
+  .recover input:focus{outline:3px solid var(--peach);outline-offset:1px;border-color:var(--brown)}
+
+  /* Refund */
+  .refund-card{background:var(--cream-card);border:1px solid var(--line);border-left:5px solid var(--brown-deep);border-radius:var(--radius);padding:28px 28px}
+  .refund-card p{color:var(--muted);margin:0 0 12px;font-size:16px}
+  .refund-card p:last-child{margin-bottom:0}
+  .refund-card strong{color:var(--brown-deep)}
+  .refund-card a{color:var(--brown-mid);font-weight:700}
+
+  /* Sticky pay bar */
+  .sticky-pay{position:fixed;left:0;right:0;bottom:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 20px;background:var(--cream-card);border-top:1px solid var(--line);box-shadow:0 -10px 24px -14px rgba(46,26,17,.4);transform:translateY(105%);transition:transform .35s ease}
+  .sticky-pay.is-visible{transform:none}
+  .sticky-pay span{font-weight:700;color:var(--brown-deep);font-size:15px}
+  @media(min-width:900px){.sticky-pay{justify-content:center;gap:28px}}
+
+  /* Footer (the brown you liked) */
+  footer.foot{background:var(--brown-deep);color:rgba(251,243,232,.7);padding:40px 0 30px;font-size:14px}
+  footer.foot .wrap{display:flex;flex-direction:column;gap:8px}
+  footer.foot p{margin:0}
+  footer.foot a{color:var(--peach);font-weight:600;text-decoration:none}
+  footer.foot a:hover{text-decoration:underline}
+  footer.foot .social{display:flex;gap:20px;flex-wrap:wrap}
+
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} *{transition:none !important} }
+</style>
 </head>
 <body>
 
 <header class="top" id="site-header">
   <div class="wrap bar">
     <a href="#top" aria-label="{{ course.brand }}">
-      <img class="logo" src="{% static 'academy/img/sales logo.png' %}" alt="{{ course.brand }}" onerror="this.style.visibility='hidden'">
+      <span class="logo-wrap"><img class="logo" src="{% static 'academy/img/sales-logo.png' %}" alt="{{ course.brand }}"></span>
     </a>
-    <nav class="header-actions" aria-label="Primary">
-      <a class="header-link" href="#curriculum">Curriculum</a>
-      <a class="header-link" href="#enroll">Already enrolled?</a>
-      <a class="btn gold sm" href="{{ paystack_url }}">Enroll now</a>
+    <nav class="nav" aria-label="Primary">
+      <a class="link" href="#curriculum">Curriculum</a>
+      <a class="link" href="#refund">Refund policy</a>
+      <a class="link" href="#enroll">Already enrolled?</a>
+      <a class="btn btn-peach btn-sm" href="{{ paystack_url }}">Enroll now</a>
     </nav>
   </div>
 </header>
@@ -32,16 +192,16 @@
   <!-- HERO -->
   <section class="hero">
     <div class="wrap hero-grid">
-      <div class="hero-copy">
+      <div>
         <p class="kicker">{{ course.brand }} masterclass · Starts {{ course.start_label }}</p>
         <h1>Source Montessori and learning resources from China, at a cost you can calculate.</h1>
         <p class="lead">A 5-day practical course on finding reliable suppliers, working out your true landed cost, and importing without middlemen.</p>
         <div class="cta-row">
-          <a class="btn gold lg" href="{{ paystack_url }}">Enroll for {{ ngn_label }}</a>
-          <a class="btn ghost lg" href="#curriculum">See the curriculum</a>
+          <a class="btn btn-peach btn-lg" href="{{ paystack_url }}">Enroll for {{ ngn_label }}</a>
+          <a class="btn btn-line btn-lg" href="#curriculum">See the curriculum</a>
         </div>
         <ul class="assure">
-          
+          <li>5 recorded training days</li>
           <li>12 months of classroom access</li>
           <li>Secure checkout with Paystack</li>
         </ul>
@@ -59,7 +219,7 @@
   </section>
 
   <!-- OUTCOMES -->
-  <section class="band">
+  <section class="bg-card">
     <div class="wrap">
       <div class="head">
         <h2>A working process, not theory</h2>
@@ -100,7 +260,7 @@
   </section>
 
   <!-- CURRICULUM -->
-  <section id="curriculum">
+  <section class="bg-cream" id="curriculum">
     <div class="wrap narrow">
       <div class="head">
         <h2>Five days, one complete sourcing cycle</h2>
@@ -116,28 +276,20 @@
     </div>
   </section>
 
-  <!-- WORKSPACE -->
-  <section class="band">
-    <div class="wrap narrow">
-      <figure class="surround">
-        <img src="{% static 'academy/img/surroundings.png' %}" alt="{{ course.instructor }}'s sourcing and learning-resources workspace" onerror="this.parentElement.style.minHeight='220px'; this.remove()">
-        <figcaption>Lessons are filmed in a working Montessori and learning-resources set-up.</figcaption>
-      </figure>
-    </div>
-  </section>
-
   {% if ghs_enabled %}
-  <section>
-    <div class="wrap narrow ghana">
-      <h2>Paying from Ghana?</h2>
-      <p>Pay {{ ghs_label }} in cedis by card or mobile money on the secure payment page. Your access is confirmed the same way.</p>
-      <a class="btn blue" href="{{ paystack_url }}">Pay in GH₵</a>
+  <section class="bg-card">
+    <div class="wrap narrow">
+      <div class="ghana">
+        <h2 style="margin-bottom:10px">Paying from Ghana?</h2>
+        <p>Pay {{ ghs_label }} in cedis by card or mobile money on the secure payment page. Your access is confirmed the same way.</p>
+        <a class="btn btn-brown" href="{{ paystack_url }}">Pay in GH₵</a>
+      </div>
     </div>
   </section>
   {% endif %}
 
   <!-- ENROLL -->
-  <section class="band" id="enroll">
+  <section class="bg-card" id="enroll">
     <div class="wrap narrow">
       <div class="enroll-card">
         <h2>Join the masterclass</h2>
@@ -149,16 +301,31 @@
           <div><dt>Access</dt><dd>12 months</dd></div>
           <div><dt>Classroom</dt><dd>Telegram, with live Q&amp;A</dd></div>
         </dl>
-        <a class="btn gold lg block" href="{{ paystack_url }}">Enroll now</a>
-        <p class="fine center">Pay by card or bank transfer through Paystack.</p>
+        <a class="btn btn-brown btn-lg btn-block" href="{{ paystack_url }}">Enroll now</a>
+        <p class="fine center" style="margin-top:12px">Pay by card or bank transfer through Paystack.</p>
 
         <form class="recover" action="{% url 'success' %}" method="get">
           <label for="ref">Already paid? Enter your payment reference to get your access.</label>
           <div class="row">
             <input id="ref" name="reference" placeholder="Your Paystack reference" required maxlength="50" pattern="[A-Za-z0-9_\-]{4,50}">
-            <button class="btn blue" type="submit">Get my access</button>
+            <button class="btn btn-brown" type="submit">Get my access</button>
           </div>
         </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- REFUND POLICY -->
+  <section class="bg-cream" id="refund">
+    <div class="wrap narrow">
+      <div class="head">
+        <p class="fine" style="font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--brown-mid)">Refund policy</p>
+        <h2>Refunds within 72 hours of joining</h2>
+      </div>
+      <div class="refund-card">
+        <p>You can request a refund within <strong>72 hours of joining the Telegram student group</strong>.</p>
+        <p>Once you have joined the group and 72 hours have passed, refunds are no longer available.</p>
+        {% if support_url %}<p>To request a refund, contact support on <a href="{{ support_url }}" target="_blank" rel="noopener noreferrer">WhatsApp</a>.</p>{% endif %}
       </div>
     </div>
   </section>
@@ -167,17 +334,20 @@
 
 <div class="sticky-pay" id="sticky-pay" role="region" aria-label="Enroll now">
   <span>{{ ngn_label }} · 12 months access</span>
-  <a class="btn gold sm" href="{{ paystack_url }}">Enroll now</a>
+  <a class="btn btn-brown btn-sm" href="{{ paystack_url }}">Enroll now</a>
 </div>
 
 <footer class="foot">
   <div class="wrap">
-    <p>Trading name: Sales Growth Academy · Legal entity: Books Roundabout Nigeria Limited</p>
-    <p class="social">
-      <a href="https://www.facebook.com/YOUR_FACEBOOK_PAGE" target="_blank" rel="noopener noreferrer">Facebook</a>
-      <a href="https://www.instagram.com/YOUR_INSTAGRAM_HANDLE" target="_blank" rel="noopener noreferrer">Instagram</a>
+    <div style="font-family:var(--serif);color:#fff;font-size:18px">{{ course.brand }}</div>
+    <p>{{ course.name }}</p>
+    <p style="font-size:12.5px;opacity:.75;margin-top:6px">Trading name: Sales Growth Academy · Legal entity: Books Roundabout Nigeria Limited</p>
+    <p class="social" style="margin-top:14px;padding-top:16px;border-top:1px solid rgba(251,243,232,.14)">
+      <a href="https://www.instagram.com/salesgrowth_academy" target="_blank" rel="noopener noreferrer">Instagram</a>
+      <a href="https://www.facebook.com/share/1Dtz6ctwdK/" target="_blank" rel="noopener noreferrer">Facebook</a>
+      {% if support_url %}<a href="{{ support_url }}" target="_blank" rel="noopener noreferrer">WhatsApp</a>{% endif %}
     </p>
-    {% if support_url %}<p><a href="{{ support_url }}">Contact support</a></p>{% endif %}
+    <p style="font-size:12px;opacity:.5;margin-top:10px"><a href="#refund" style="color:inherit;font-weight:400;text-decoration:underline">Refund Policy</a></p>
   </div>
 </footer>
 

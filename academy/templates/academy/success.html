@@ -5,59 +5,150 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
 <title>Payment | {{ course.brand }}</title>
-<link rel="icon" href="{% static 'academy/img/logo.png' %}">
+<meta name="theme-color" content="#2E1A11">
+<link rel="icon" href="{% static 'academy/img/sales-logo.png' %}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{% static 'academy/css/site.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --brown-deep:#2E1A11;
+    --brown:#4A2A1C;
+    --brown-mid:#6B4632;
+    --peach:#F1C7A3;
+    --peach-soft:#F8DFC4;
+    --cream:#FBF3E8;
+    --cream-card:#FFFCF7;
+    --ink:#2A1C14;
+    --muted:#6B5645;
+    --line:rgba(42,28,20,.12);
+    --serif:"Fraunces",Georgia,"Times New Roman",serif;
+    --sans:"Karla",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:var(--sans);background:var(--cream);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column}
+  img{max-width:100%;display:block}
+  a{color:inherit}
+  h1{font-family:var(--serif);color:var(--brown-deep);font-weight:600;line-height:1.15;margin:0 0 14px;font-size:clamp(2rem,4.6vw,2.7rem)}
+  p{margin:0 0 1em}
+  :focus-visible{outline:3px solid var(--peach);outline-offset:3px}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 22px;width:100%}
+
+  /* Header */
+  header.top{position:sticky;top:0;z-index:50;background:var(--brown-deep);transition:box-shadow .3s}
+  header.top.is-scrolled{box-shadow:0 10px 24px -18px rgba(0,0,0,.6)}
+  .bar{display:flex;align-items:center;justify-content:space-between;gap:16px;height:76px}
+  .logo-wrap{display:inline-flex;background:var(--cream);border-radius:10px;padding:6px 12px}
+  .logo{height:40px;width:auto}
+  .btn-line{display:inline-block;padding:10px 18px;border-radius:999px;color:var(--peach-soft);box-shadow:inset 0 0 0 1.5px var(--peach);font-weight:700;font-size:15px;text-decoration:none}
+  .btn-line:hover{background:rgba(241,199,163,.12)}
+
+  /* Content */
+  main{flex:1;padding:72px 0 88px}
+  .card{max-width:620px;margin:0 auto;background:var(--cream-card);border:1px solid var(--line);border-radius:18px;padding:44px 28px;text-align:center;box-shadow:0 24px 50px -30px rgba(46,26,17,.4)}
+  .status-icon{display:grid;place-items:center;width:70px;height:70px;margin:0 auto 22px;border-radius:50%;background:var(--brown-deep);color:var(--peach)}
+  .status-icon.wait{background:var(--peach-soft);color:var(--brown-deep)}
+  .status-icon svg{width:32px;height:32px}
+  .kicker{font-size:13px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--brown-mid);margin:0 0 10px}
+  .lead{font-size:1.08rem;color:var(--muted);max-width:34em;margin:0 auto 28px}
+  .btn{display:inline-block;text-align:center;font-family:var(--sans);font-weight:700;font-size:16px;letter-spacing:.02em;padding:16px 30px;border-radius:999px;background:var(--brown-deep);color:var(--cream);text-decoration:none;box-shadow:0 14px 26px -12px rgba(46,26,17,.55);transition:background .2s,transform .15s}
+  .btn:hover{background:var(--brown)}
+  .btn:active{transform:scale(.98)}
+  .next{list-style:none;counter-reset:s;margin:34px auto 0;padding:22px 24px;max-width:480px;text-align:left;background:var(--cream);border:1px solid var(--line);border-radius:14px}
+  .next li{counter-increment:s;position:relative;padding:0 0 14px 40px;font-size:15px}
+  .next li:last-child{padding-bottom:0}
+  .next li::before{content:counter(s);position:absolute;left:0;top:0;width:26px;height:26px;border-radius:50%;background:var(--brown-deep);color:var(--peach);font-weight:700;font-size:13px;display:grid;place-items:center}
+  .note{margin:24px 0 0;font-size:14px;color:var(--muted)}
+  .note a{color:var(--brown-mid);font-weight:700}
+
+  /* Footer (the brown you liked) */
+  footer{background:var(--brown-deep);color:rgba(251,243,232,.7);padding:36px 0 30px;font-size:14px}
+  footer .fname{font-family:var(--serif);color:#fff;font-size:18px;margin-bottom:4px}
+  footer p{margin:0}
+  footer a{color:var(--peach);font-weight:600;text-decoration:none}
+  footer a:hover{text-decoration:underline}
+  footer .social{display:flex;gap:20px;flex-wrap:wrap;margin-top:14px;padding-top:16px;border-top:1px solid rgba(251,243,232,.14)}
+
+  @media (prefers-reduced-motion: reduce){ *{transition:none !important} }
+</style>
 </head>
 <body>
 
-<header class="top is-scrolled">
+<header class="top" id="site-header">
   <div class="wrap bar">
-    <a href="{% url 'landing' %}" aria-label="{{ course.brand }}"><img class="logo" src="{% static 'academy/img/sales logo.png' %}" alt="{{ course.brand }}" onerror="this.style.visibility='hidden'"></a>
-    <a class="btn ghost sm" href="{% url 'landing' %}">Back to course</a>
+    <a href="{% url 'landing' %}" aria-label="{{ course.brand }}">
+      <span class="logo-wrap"><img class="logo" src="{% static 'academy/img/sales-logo.png' %}" alt="{{ course.brand }}"></span>
+    </a>
+    <a class="btn-line" href="{% url 'landing' %}">Back to course</a>
   </div>
 </header>
 
-<main class="wrap narrow success">
-  {% if state == "verified" %}
-    <div class="status-icon" aria-hidden="true">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
-    </div>
-    <h1>Payment successful</h1>
-    <p class="lead">Your seat for the {{ course.brand }} {{ course.name }} is secured.</p>
-    <a class="btn gold lg" href="{{ deep_link }}">Get my Telegram access</a>
-    <ol class="next">
-      <li>Tap the button above to open Telegram.</li>
-      <li>Press Start in the chat.</li>
-      <li>Your classroom links appear there.</li>
-    </ol>
-    <p class="fine note">You can return to this page any time with your payment reference, so you don't need to finish now.</p>
+<main>
+  <div class="wrap">
+    <div class="card">
+      {% if state == "verified" %}
+        <div class="status-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+        </div>
+        <p class="kicker">Payment confirmed</p>
+        <h1>Payment successful</h1>
+        <p class="lead">Your seat for the {{ course.brand }} {{ course.name }} is secured.</p>
+        <a class="btn" href="{{ deep_link }}">Get my Telegram access</a>
+        <ol class="next">
+          <li>Tap the button above to open Telegram.</li>
+          <li>Press Start in the chat.</li>
+          <li>Your classroom links appear there.</li>
+        </ol>
+        <p class="note">You can return to this page any time with your payment reference, so you don't need to finish now.</p>
 
-  {% elif state == "pending" %}
-    <div class="status-icon wait" aria-hidden="true">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-    </div>
-    <h1>We couldn't verify your payment yet</h1>
-    <p class="lead">If you just completed payment, wait a moment, then check again.</p>
-    <a class="btn blue lg" href="{% url 'success' %}?reference={{ reference|urlencode }}">Check payment again</a>
-    {% if support_url %}<p class="fine note">Still not working? <a href="{{ support_url }}">Contact {{ course.brand }} support</a>.</p>{% endif %}
+      {% elif state == "pending" %}
+        <div class="status-icon wait" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        </div>
+        <p class="kicker">Checking payment</p>
+        <h1>We couldn't verify your payment yet</h1>
+        <p class="lead">If you just completed payment, wait a moment, then check again.</p>
+        <a class="btn" href="{% url 'success' %}?reference={{ reference|urlencode }}">Check payment again</a>
+        {% if support_url %}<p class="note">Still not working? <a href="{{ support_url }}">Contact {{ course.brand }} support</a>.</p>{% endif %}
 
-  {% elif state == "busy" %}
-    <div class="status-icon wait" aria-hidden="true">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-    </div>
-    <h1>Almost there</h1>
-    <p class="lead">Our payment checker is busy. Check again in a moment.</p>
-    <a class="btn blue lg" href="{% url 'success' %}?reference={{ reference|urlencode }}">Check payment again</a>
+      {% elif state == "busy" %}
+        <div class="status-icon wait" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        </div>
+        <p class="kicker">One moment</p>
+        <h1>Almost there</h1>
+        <p class="lead">Our payment checker is busy. Check again in a moment.</p>
+        <a class="btn" href="{% url 'success' %}?reference={{ reference|urlencode }}">Check payment again</a>
 
-  {% else %}
-    <h1>Enter your payment reference</h1>
-    <p class="lead">You'll find your reference on the Paystack receipt. Enter it on the course page, or pay for your seat first.</p>
-    <a class="btn blue lg" href="{% url 'landing' %}">Go to the course page</a>
-  {% endif %}
+      {% else %}
+        <p class="kicker">Payment reference</p>
+        <h1>Enter your payment reference</h1>
+        <p class="lead">You'll find your reference on the Paystack receipt. Enter it on the course page, or pay for your seat first.</p>
+        <a class="btn" href="{% url 'landing' %}">Go to the course page</a>
+      {% endif %}
+    </div>
+  </div>
 </main>
+
+<footer>
+  <div class="wrap">
+    <div class="fname">{{ course.brand }}</div>
+    <p>{{ course.name }}</p>
+    <p style="font-size:12.5px;opacity:.75;margin-top:6px">Trading name: Sales Growth Academy · Legal entity: Books Roundabout Nigeria Limited</p>
+    <p class="social">
+      <a href="https://www.instagram.com/salesgrowth_academy" target="_blank" rel="noopener noreferrer">Instagram</a>
+      <a href="https://www.facebook.com/share/1Dtz6ctwdK/" target="_blank" rel="noopener noreferrer">Facebook</a>
+      {% if support_url %}<a href="{{ support_url }}" target="_blank" rel="noopener noreferrer">WhatsApp</a>{% endif %}
+    </p>
+  </div>
+</footer>
+
+<script>
+  var header = document.getElementById('site-header');
+  window.addEventListener('scroll', function(){
+    header.classList.toggle('is-scrolled', window.scrollY > 8);
+  }, { passive: true });
+</script>
 
 </body>
 </html>

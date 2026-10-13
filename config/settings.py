@@ -28,13 +28,14 @@ ALLOWED_HOSTS += [h for h in env("EXTRA_ALLOWED_HOSTS").split(",") if h]
 CSRF_TRUSTED_ORIGINS = [f"https://{RAILWAY_DOMAIN}"] if RAILWAY_DOMAIN else []
 
 INSTALLED_APPS = [
+    # academy comes first so its templates/admin/login.html overrides Django's admin login page
+    "academy.apps.AcademyConfig",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "academy.apps.AcademyConfig",
 ]
 
 MIDDLEWARE = [

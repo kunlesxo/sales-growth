@@ -1,0 +1,83 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block extrastyle %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'admin/css/login.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Karla:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--brown-deep:#2E1A11;--brown:#4A2A1C;--peach:#F1C7A3;--peach-soft:#F8DFC4;--cream:#FBF3E8;--cream-card:#FFFCF7;--line:rgba(42,28,20,.12);--ink:#2A1C14;--muted:#6B5645}
+  body.login{background:var(--cream);font-family:Karla,system-ui,sans-serif;color:var(--ink)}
+  body.login #container{background:transparent;min-height:100vh;display:flex;flex-direction:column}
+  body.login #header{background:var(--brown-deep);border-bottom:none;padding:18px 24px}
+  body.login #branding{display:flex;align-items:center;gap:14px}
+  body.login #branding .logo-wrap{display:inline-flex;background:var(--cream);border-radius:10px;padding:6px 12px}
+  body.login #branding img{height:38px;width:auto;display:block}
+  body.login #site-name{margin:0;font-family:Fraunces,Georgia,serif;font-size:1.3rem;font-weight:600}
+  body.login #site-name a{color:#fff;text-decoration:none}
+  body.login #content{flex:1;display:flex;justify-content:center;align-items:flex-start}
+  body.login #content-main{width:100%;max-width:400px;margin:48px 16px 0;padding:34px 28px;background:var(--cream-card);border:1px solid var(--line);border-radius:18px;box-shadow:0 24px 50px -30px rgba(46,26,17,.45)}
+  body.login #content-main::before{content:"Admin sign in";display:block;font-family:Fraunces,Georgia,serif;font-size:1.5rem;font-weight:600;color:var(--brown-deep);margin-bottom:22px}
+  body.login .form-row{padding:0 0 18px}
+  body.login .form-row label{display:block;font-weight:700;color:var(--brown-deep);margin-bottom:6px;font-size:15px}
+  body.login .form-row input[type=text],
+  body.login .form-row input[type=password]{width:100%;padding:12px 14px;border:1px solid rgba(42,28,20,.22);border-radius:10px;background:#fff;font:inherit;font-size:15px;color:var(--ink)}
+  body.login .form-row input:focus{outline:3px solid var(--peach);outline-offset:1px;border-color:var(--brown)}
+  body.login .submit-row{padding:6px 0 0}
+  body.login .submit-row input[type=submit]{width:100%;padding:14px 16px;border:0;border-radius:999px;background:var(--brown-deep);color:var(--cream);font:700 16px Karla,system-ui,sans-serif;cursor:pointer;box-shadow:0 14px 26px -12px rgba(46,26,17,.55);transition:background .2s}
+  body.login .submit-row input[type=submit]:hover{background:var(--brown)}
+  body.login .password-reset-link{padding-top:16px;font-size:14px;text-align:center}
+  body.login .password-reset-link a{color:var(--brown);font-weight:700}
+  body.login .errornote{background:#fbe9e5;color:#7a2317;border:1px solid #efc1b8;border-radius:10px;box-shadow:none;font-weight:600}
+  body.login .breadcrumbs{display:none}
+  body.login #footer{background:var(--brown-deep);color:rgba(251,243,232,.6);padding:18px}
+</style>
+{% endblock %}
+
+{% block bodyclass %}{{ block.super }} login{% endblock %}
+{% block usertools %}{% endblock %}
+{% block nav-global %}{% endblock %}
+{% block breadcrumbs %}{% endblock %}
+{% block title %}Log in | Sales Growth Academy{% endblock %}
+
+{% block branding %}
+<span class="logo-wrap"><img src="{% static 'academy/img/sales-logo.png' %}" alt="Sales Growth Academy"></span>
+<h1 id="site-name"><a href="{% url 'admin:index' %}">Sales Growth Academy</a></h1>
+{% endblock %}
+
+{% block content %}
+{% if form.errors and not form.non_field_errors %}
+<p class="errornote">
+  {% if form.errors.items|length == 1 %}{% translate "Please correct the error below." %}{% else %}{% translate "Please correct the errors below." %}{% endif %}
+</p>
+{% endif %}
+
+{% if form.non_field_errors %}
+  {% for error in form.non_field_errors %}
+    <p class="errornote">{{ error }}</p>
+  {% endfor %}
+{% endif %}
+
+<div id="content-main">
+  <form action="{{ app_path }}" method="post" id="login-form">{% csrf_token %}
+    <div class="form-row">
+      {{ form.username.errors }}
+      {{ form.username.label_tag }} {{ form.username }}
+    </div>
+    <div class="form-row">
+      {{ form.password.errors }}
+      {{ form.password.label_tag }} {{ form.password }}
+      <input type="hidden" name="next" value="{{ next }}">
+    </div>
+    <div class="submit-row">
+      <input type="submit" value="{% translate 'Log in' %}">
+    </div>
+    {% url 'admin_password_reset' as password_reset_url %}
+    {% if password_reset_url %}
+    <div class="password-reset-link">
+      <a href="{{ password_reset_url }}">{% translate 'Forgotten your password or username?' %}</a>
+    </div>
+    {% endif %}
+  </form>
+</div>
+{% endblock %}
