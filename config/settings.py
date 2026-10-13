@@ -26,6 +26,8 @@ if RAILWAY_DOMAIN:
     ALLOWED_HOSTS.append(RAILWAY_DOMAIN)
 ALLOWED_HOSTS += [h for h in env("EXTRA_ALLOWED_HOSTS").split(",") if h]
 CSRF_TRUSTED_ORIGINS = [f"https://{RAILWAY_DOMAIN}"] if RAILWAY_DOMAIN else []
+# Your own domain for logins, with the scheme, e.g. https://example.com,https://www.example.com
+CSRF_TRUSTED_ORIGINS += [o for o in env("EXTRA_CSRF_TRUSTED_ORIGINS").split(",") if o]
 
 INSTALLED_APPS = [
     # academy comes first so its templates/admin/login.html overrides Django's admin login page
