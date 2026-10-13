@@ -3,40 +3,45 @@
 
 {% block extrastyle %}
 {{ block.super }}
-<link rel="stylesheet" href="{% static 'admin/css/login.css' %}">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  /* Palette: same as the landing page. Set on body so the admin's dark mode can't override it. */
+  /* Classic sign-in: a plain cream page with one white panel. No motion.
+     Set on body so the admin's dark mode can't override it. */
   body.sga-admin{
     --body-bg:#FBF3E8; --body-fg:#2A1C14; --body-quiet-color:#6B5645; --body-loud-color:#2E1A11;
-    --border-color:rgba(42,28,20,.12); --link-fg:#6B4632; --header-bg:#FBF3E8;
+    --border-color:rgba(42,28,20,.14); --link-fg:#6B4632; --header-bg:#FBF3E8;
     --header-link-color:#2E1A11; --button-bg:#2E1A11; --button-fg:#FBF3E8;
     background:#FBF3E8; color:#2A1C14; font-family:Karla,system-ui,sans-serif;
   }
-  body.sga-admin #container{background:transparent;min-height:100vh;display:flex;flex-direction:column}
-  body.sga-admin #header{background:#FBF3E8;border-bottom:1px solid rgba(42,28,20,.12);padding:16px 24px;box-shadow:none}
-  body.sga-admin #branding{display:flex;align-items:center;gap:14px}
-  body.sga-admin #branding img{height:50px;width:auto;display:block}
-  body.sga-admin #site-name{margin:0;font-family:Fraunces,Georgia,serif;font-size:1.3rem;font-weight:600}
-  body.sga-admin #site-name a,body.sga-admin #site-name a:link,body.sga-admin #site-name a:visited{color:#2E1A11;text-decoration:none}
-  body.sga-admin #content{flex:1;display:flex;justify-content:center;align-items:flex-start;padding:0 16px}
-  body.sga-admin #content-main{width:100%;max-width:400px;margin:56px 0 0;padding:36px 30px;background:#FFFCF7;border:1px solid rgba(42,28,20,.12);border-top:5px solid #2E1A11;border-radius:18px;box-shadow:0 24px 50px -30px rgba(46,26,17,.45);animation:rise .9s cubic-bezier(.2,.7,.2,1) both}
-  body.sga-admin #content-main::before{content:"Admin sign in";display:block;font-family:Fraunces,Georgia,serif;font-size:1.6rem;font-weight:600;color:#2E1A11;margin-bottom:6px}
-  body.sga-admin #content-main::after{content:"Sales Growth Academy staff only";display:block;font-size:14px;color:#6B5645;margin:0 0 24px}
-  @keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
-  body.sga-admin .form-row{padding:0 0 18px}
-  body.sga-admin .form-row label{display:block;font-weight:700;color:#2E1A11;margin-bottom:6px;font-size:15px}
-  body.sga-admin .form-row input[type=text],
-  body.sga-admin .form-row input[type=password]{width:100%;padding:12px 14px;border:1px solid rgba(42,28,20,.22);border-radius:10px;background:#fff;font:inherit;font-size:15px;color:#2A1C14;transition:border-color .3s,box-shadow .3s}
-  body.sga-admin .form-row input:focus{outline:none;border-color:#6B4632;box-shadow:0 0 0 4px rgba(241,199,163,.45)}
-  body.sga-admin .submit-row{padding:6px 0 0}
-  body.sga-admin .submit-row input[type=submit]{width:100%;padding:14px 16px;border:0;border-radius:999px;background:#2E1A11;color:#FBF3E8;font:700 16px Karla,system-ui,sans-serif;cursor:pointer;box-shadow:0 14px 26px -14px rgba(46,26,17,.6);transition:background-color .3s,transform .3s}
-  body.sga-admin .submit-row input[type=submit]:hover{background:#4A2A1C;transform:translateY(-2px)}
-  body.sga-admin .password-reset-link{padding-top:18px;font-size:14px;text-align:center}
-  body.sga-admin .password-reset-link a{color:#6B4632;font-weight:700}
-  body.sga-admin .errornote{background:#fbe9e5;color:#7a2317;border:1px solid #efc1b8;border-radius:10px;box-shadow:none;font-weight:600}
+  body.sga-admin #container{background:transparent;min-width:0;width:100%;min-height:100vh;display:flex;flex-direction:column}
+  body.sga-admin #header,
+  body.sga-admin #footer,
   body.sga-admin .breadcrumbs{display:none}
-  @media (prefers-reduced-motion: reduce){ body.sga-admin #content-main{animation:none} }
+  body.sga-admin #content{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;box-sizing:border-box;padding:40px 16px 56px}
+
+  body.sga-admin .sga-brand{text-align:center;margin:0 0 22px}
+  body.sga-admin .sga-brand img{height:72px;width:auto;margin:0 auto 8px;display:block}
+  body.sga-admin .sga-brand p{margin:0;font-family:Fraunces,Georgia,serif;font-size:1.3rem;font-weight:600;color:#2E1A11}
+
+  body.sga-admin .sga-panel{width:100%;max-width:380px;box-sizing:border-box;background:#FFFCF7;border:1px solid rgba(42,28,20,.14);border-radius:8px;padding:28px 26px 24px}
+  body.sga-admin .sga-panel h1{margin:0 0 4px;font-family:Fraunces,Georgia,serif;font-size:1.5rem;font-weight:600;line-height:1.2;color:#2E1A11}
+  body.sga-admin .sga-panel .sub{margin:0 0 22px;font-size:14px;color:#6B5645}
+
+  body.sga-admin .form-row{padding:0 0 16px}
+  body.sga-admin .form-row label{display:block;margin:0 0 6px;font-size:14px;font-weight:700;color:#2E1A11}
+  body.sga-admin .form-row input:not([type=hidden]){width:100%;box-sizing:border-box;padding:11px 12px;border:1px solid rgba(42,28,20,.25);border-radius:6px;background:#fff;font:inherit;font-size:15px;color:#2A1C14}
+  body.sga-admin .form-row input:not([type=hidden]):focus{outline:2px solid #6B4632;outline-offset:1px;border-color:#6B4632}
+  body.sga-admin .errorlist{margin:0 0 8px;padding:0;list-style:none;color:#7a2317;font-size:14px;font-weight:600}
+
+  body.sga-admin .submit-row{padding:4px 0 0}
+  body.sga-admin .submit-row input[type=submit]{width:100%;padding:12px 16px;border:0;border-radius:6px;background:#2E1A11;color:#FBF3E8;font:700 15px Karla,system-ui,sans-serif;letter-spacing:.02em;cursor:pointer}
+  body.sga-admin .submit-row input[type=submit]:hover{background:#4A2A1C}
+
+  body.sga-admin .password-reset-link{padding-top:18px;margin-top:4px;border-top:1px solid rgba(42,28,20,.1);font-size:14px;text-align:center}
+  body.sga-admin .password-reset-link a{color:#6B4632;font-weight:700}
+
+  body.sga-admin .errornote{box-sizing:border-box;width:100%;max-width:380px;margin:0 0 16px;padding:10px 14px;background:#fbe9e5;color:#7a2317;border:1px solid #efc1b8;border-radius:6px;font-size:14px;font-weight:600}
+  body.sga-admin .sga-note{margin:18px 0 0;font-size:13px;color:#6B5645;text-align:center}
 </style>
 {% endblock %}
 
@@ -46,12 +51,14 @@
 {% block breadcrumbs %}{% endblock %}
 {% block title %}Log in | Sales Growth Academy{% endblock %}
 
-{% block branding %}
-<img src="{% static 'academy/img/sales-logo-transparent.png' %}" alt="Sales Growth Academy">
-<h1 id="site-name"><a href="{% url 'admin:index' %}">Sales Growth Academy</a></h1>
-{% endblock %}
+{% block branding %}{% endblock %}
 
 {% block content %}
+<div class="sga-brand">
+  <img src="{% static 'academy/img/sales-logo-transparent.png' %}" alt="Sales Growth Academy">
+  <p>Sales Growth Academy</p>
+</div>
+
 {% if form.errors and not form.non_field_errors %}
 <p class="errornote">
   {% if form.errors.items|length == 1 %}{% translate "Please correct the error below." %}{% else %}{% translate "Please correct the errors below." %}{% endif %}
@@ -64,7 +71,10 @@
   {% endfor %}
 {% endif %}
 
-<div id="content-main">
+<div class="sga-panel">
+  <h1>Admin log in</h1>
+  <p class="sub">Enter your staff username and password.</p>
+
   <form action="{{ app_path }}" method="post" id="login-form">{% csrf_token %}
     <div class="form-row">
       {{ form.username.errors }}
@@ -86,4 +96,6 @@
     {% endif %}
   </form>
 </div>
+
+<p class="sga-note">Staff access only.</p>
 {% endblock %}

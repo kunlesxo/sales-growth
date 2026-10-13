@@ -1,7 +1,7 @@
 {% extends "admin/base_site.html" %}
 {% load static %}
 {% block title %}Students &amp; payments | {{ site_title }}{% endblock %}
-{% block bodyclass %}{{ block.super }} sga-admin{% endblock %}
+{% block bodyclass %}{{ block.super }} sga-admin sga-dash{% endblock %}
 {% block breadcrumbs %}<div class="breadcrumbs"><a href="{% url 'admin:index' %}">Home</a> &rsaquo; Dashboard</div>{% endblock %}
 
 {% block branding %}
@@ -11,54 +11,78 @@
 
 {% block extrastyle %}
 {{ block.super }}
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  /* Palette: same as the landing page. Set on body so the admin's dark mode can't override it. */
+  /* Classic admin page: flat panels, thin rules, no motion. Palette matches the landing page.
+     Set on body so the admin's dark mode can't override it. */
   body.sga-admin{
     --body-bg:#FBF3E8; --body-fg:#2A1C14; --body-quiet-color:#6B5645; --body-loud-color:#2E1A11;
-    --border-color:rgba(42,28,20,.12); --link-fg:#6B4632; --header-bg:#FBF3E8;
+    --border-color:rgba(42,28,20,.14); --link-fg:#6B4632; --header-bg:#FBF3E8;
     --header-link-color:#2E1A11; --button-bg:#2E1A11; --button-fg:#FBF3E8;
     background:#FBF3E8; color:#2A1C14; font-family:Karla,system-ui,sans-serif;
   }
-  body.sga-admin #container{background:transparent}
-  body.sga-admin #header{background:#FBF3E8;border-bottom:1px solid rgba(42,28,20,.12);padding:14px 24px;box-shadow:none}
-  body.sga-admin #branding{display:flex;align-items:center;gap:14px}
-  body.sga-admin #branding img{height:46px;width:auto;display:block}
-  body.sga-admin #site-name{margin:0;font-family:Fraunces,Georgia,serif;font-size:1.25rem;font-weight:600}
+  body.sga-admin #container{background:transparent;min-width:0;width:100%}
+  body.sga-admin #header{background:#FBF3E8;border-bottom:1px solid rgba(42,28,20,.14);padding:12px 20px;box-shadow:none}
+  body.sga-admin #branding{display:flex;align-items:center;gap:12px}
+  body.sga-admin #branding img{height:40px;width:auto;display:block}
+  body.sga-admin #site-name{margin:0;font-family:Fraunces,Georgia,serif;font-size:1.1rem;font-weight:600}
   body.sga-admin #site-name a,body.sga-admin #site-name a:link,body.sga-admin #site-name a:visited{color:#2E1A11;text-decoration:none}
   body.sga-admin #user-tools,body.sga-admin #user-tools a{color:#6B4632}
   body.sga-admin #user-tools a:hover{color:#2E1A11}
-  body.sga-admin .breadcrumbs{background:transparent;color:#6B5645;padding:12px 24px;border-bottom:1px solid rgba(42,28,20,.08)}
+  body.sga-admin .breadcrumbs{background:transparent;color:#6B5645;padding:10px 20px;border-bottom:1px solid rgba(42,28,20,.1)}
   body.sga-admin .breadcrumbs a{color:#6B4632}
+  body.sga-admin #content{flex:1 0 auto;width:100%;box-sizing:border-box;padding:28px 20px 56px}
 
-  .sga{font-family:Karla,system-ui,sans-serif;color:#2A1C14;max-width:1180px}
-  .sga h1{font-family:Fraunces,Georgia,serif;font-size:2rem;font-weight:600;color:#2E1A11;margin:0 0 6px;line-height:1.15}
-  .sga h2{font-family:Fraunces,Georgia,serif;font-size:1.15rem;font-weight:600;color:#2E1A11;margin:0}
-  .sga .sga-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px;margin:8px 0 28px}
-  .sga .help{margin:0;color:#6B5645;max-width:46em;font-size:15px}
-  .sga .btn{display:inline-block;padding:12px 22px;border-radius:999px;background:#2E1A11;color:#FBF3E8;font-weight:700;font-size:14px;text-decoration:none;white-space:nowrap;box-shadow:0 14px 24px -16px rgba(46,26,17,.7);transition:background-color .3s,transform .3s}
-  .sga .btn:hover{background:#4A2A1C;color:#FBF3E8;transform:translateY(-2px)}
-  .sga .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin:0 0 30px}
-  .sga .stat{background:#FFFCF7;border:1px solid rgba(42,28,20,.12);border-top:4px solid #2E1A11;border-radius:14px;padding:20px 22px;color:#6B5645;font-size:14px;font-weight:600;box-shadow:0 16px 28px -26px rgba(46,26,17,.5);animation:rise .7s cubic-bezier(.2,.7,.2,1) both}
-  .sga .stat:nth-child(2){animation-delay:.05s}.sga .stat:nth-child(3){animation-delay:.1s}.sga .stat:nth-child(4){animation-delay:.15s}
-  .sga .stat:nth-child(5){animation-delay:.2s}.sga .stat:nth-child(6){animation-delay:.25s}.sga .stat:nth-child(7){animation-delay:.3s}
-  @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-  .sga .stat span{display:block;margin-bottom:4px;font-family:Fraunces,Georgia,serif;font-size:2.1rem;font-weight:600;line-height:1.1;color:#2E1A11}
-  .sga .panel{background:#FFFCF7;border:1px solid rgba(42,28,20,.12);border-radius:16px;overflow:hidden;box-shadow:0 20px 40px -30px rgba(46,26,17,.45)}
-  .sga .panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 22px;border-bottom:1px solid rgba(42,28,20,.12);background:#FBF3E8}
-  .sga .panel-head a{font-weight:700;font-size:14px;color:#6B4632;text-decoration:none}
-  .sga .panel-head a:hover{text-decoration:underline}
-  .sga .table-wrap{overflow-x:auto}
-  .sga table.dash{width:100%;min-width:720px;border-collapse:collapse}
-  .sga table.dash th{padding:13px 18px;background:#2E1A11;color:#F8DFC4;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;text-align:left;white-space:nowrap}
-  .sga table.dash td{padding:13px 18px;border-bottom:1px solid rgba(42,28,20,.1);font-size:15px;text-align:left;color:#2A1C14}
-  .sga table.dash tr:last-child td{border-bottom:0}
-  .sga table.dash tbody tr{transition:background-color .25s}
-  .sga table.dash tbody tr:hover{background:rgba(241,199,163,.2)}
+  .sga{font-family:Karla,system-ui,sans-serif;color:#2A1C14;max-width:1120px;margin:0 auto}
+  .sga h1{font-family:Fraunces,Georgia,serif;font-size:1.75rem;font-weight:600;color:#2E1A11;margin:0 0 6px;line-height:1.2}
+  .sga h2{font-family:Fraunces,Georgia,serif;font-size:1.1rem;font-weight:600;color:#2E1A11;margin:0}
   .sga .muted{color:#6B5645}
-  .sga .empty{padding:30px 16px;text-align:center}
-  .sga .ref{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13.5px}
-  @media (prefers-reduced-motion: reduce){ .sga .stat{animation:none} }
+
+  .sga-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px;margin:0 0 22px;padding-bottom:20px;border-bottom:1px solid rgba(42,28,20,.14)}
+  .sga-help{margin:0;font-size:15px;color:#6B5645;max-width:46em}
+  .sga-btn{display:inline-block;padding:10px 18px;border-radius:6px;background:#2E1A11;color:#FBF3E8;font-weight:700;font-size:14px;text-decoration:none;white-space:nowrap}
+  .sga-btn:hover{background:#4A2A1C;color:#FBF3E8}
+
+  .sga-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));margin:0 0 24px;background:#FFFCF7;border-top:1px solid rgba(42,28,20,.14);border-left:1px solid rgba(42,28,20,.14);border-radius:8px;overflow:hidden}
+  .sga-stat{padding:16px 18px;border-right:1px solid rgba(42,28,20,.14);border-bottom:1px solid rgba(42,28,20,.14)}
+  .sga-stat-value{display:block;font-family:Fraunces,Georgia,serif;font-size:1.9rem;font-weight:600;line-height:1.1;color:#2E1A11;font-variant-numeric:tabular-nums}
+  .sga-stat-label{display:block;margin-top:6px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#6B5645}
+
+  .sga-panel{background:#FFFCF7;border:1px solid rgba(42,28,20,.14);border-radius:8px;overflow:hidden}
+  .sga-panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px;border-bottom:1px solid rgba(42,28,20,.14)}
+  .sga-panel-head a{font-size:14px;font-weight:700;color:#6B4632;text-decoration:none}
+  .sga-panel-head a:hover{text-decoration:underline}
+  .sga-table-wrap{overflow-x:auto}
+  .sga table.dash{width:100%;min-width:720px;border-collapse:collapse}
+  .sga table.dash th{padding:10px 18px;background:#F4E4D2;color:#2E1A11;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;text-align:left;white-space:nowrap;border-bottom:1px solid rgba(42,28,20,.14)}
+  .sga table.dash td{padding:12px 18px;border-bottom:1px solid rgba(42,28,20,.1);font-size:14.5px;text-align:left;vertical-align:top;color:#2A1C14}
+  .sga table.dash tr:last-child td{border-bottom:0}
+  .sga table.dash td.empty-cell{text-align:center;padding:28px 16px}
+  .sga .ref{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}
+
+  /* Phones: stats in two columns, and each student row becomes a stacked block with labels */
+  @media (max-width:720px){
+    .sga-head{flex-direction:column;align-items:stretch}
+    .sga-btn{text-align:center}
+    .sga-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .sga-stat{padding:14px}
+    .sga-stat-value{font-size:1.6rem}
+    .sga-panel-head{padding:12px 14px}
+    .sga table.dash,
+    .sga table.dash *{box-sizing:border-box}
+    .sga table.dash{min-width:0}
+    .sga table.dash thead{display:none}
+    .sga table.dash,
+    .sga table.dash tbody,
+    .sga table.dash tr,
+    .sga table.dash td{display:block;width:100%}
+    .sga table.dash tr{padding:8px 14px;border-bottom:1px solid rgba(42,28,20,.14)}
+    .sga table.dash tr:last-child{border-bottom:0}
+    .sga table.dash td{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:6px 0;border:0;text-align:right;overflow-wrap:anywhere}
+    .sga table.dash td::before{content:attr(data-label);flex:none;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#6B5645;text-align:left}
+    .sga table.dash td.empty-cell{display:block;text-align:center;padding:24px 14px}
+    .sga table.dash td.empty-cell::before{content:none}
+  }
 </style>
 {% endblock %}
 
@@ -67,35 +91,42 @@
   <div class="sga-head">
     <div>
       <h1>Students &amp; payments</h1>
-      <p class="help">Search, revoke or restore students in the student list. Search by email, Paystack reference or Telegram ID.</p>
+      <p class="sga-help">Search, revoke or restore students in the student list. Search by email, Paystack reference or Telegram ID.</p>
     </div>
-    <a class="btn" href="{% url 'admin:academy_enrollment_changelist' %}">Manage students</a>
+    <a class="sga-btn" href="{% url 'admin:academy_enrollment_changelist' %}">Manage students</a>
   </div>
 
-  <div class="stat-grid">
-    {% for label, value in stats %}<div class="stat"><span>{{ value }}</span>{{ label }}</div>{% endfor %}
+  <div class="sga-stats">
+    {% for label, value in stats %}
+      <div class="sga-stat">
+        <span class="sga-stat-value">{{ value }}</span>
+        <span class="sga-stat-label">{{ label }}</span>
+      </div>
+    {% endfor %}
   </div>
 
-  <section class="panel">
-    <div class="panel-head">
+  <section class="sga-panel">
+    <div class="sga-panel-head">
       <h2>Latest 25 students</h2>
       <a href="{% url 'admin:academy_enrollment_changelist' %}">View all</a>
     </div>
-    <div class="table-wrap">
+    <div class="sga-table-wrap">
       <table class="dash">
-        <thead><tr><th>Email</th><th>Reference</th><th>Telegram ID</th><th>Status</th><th>Purchased</th><th>Expires</th></tr></thead>
+        <thead>
+          <tr><th>Email</th><th>Reference</th><th>Telegram ID</th><th>Status</th><th>Purchased</th><th>Expires</th></tr>
+        </thead>
         <tbody>
         {% for e in recent %}
           <tr>
-            <td>{{ e.email }}</td>
-            <td class="ref">{{ e.payment_id }}</td>
-            <td>{% if e.telegram_user_id %}{{ e.telegram_user_id }}{% else %}<span class="muted">Not connected</span>{% endif %}</td>
-            <td>{{ e.get_status_display }}</td>
-            <td>{{ e.purchased_at|date:"j M Y, H:i" }}</td>
-            <td>{% if e.access_expires_at %}{{ e.access_expires_at|date:"j M Y" }}{% else %}<span class="muted">-</span>{% endif %}</td>
+            <td data-label="Email">{{ e.email }}</td>
+            <td data-label="Reference" class="ref">{{ e.payment_id }}</td>
+            <td data-label="Telegram ID">{% if e.telegram_user_id %}{{ e.telegram_user_id }}{% else %}<span class="muted">Not connected</span>{% endif %}</td>
+            <td data-label="Status">{{ e.get_status_display }}</td>
+            <td data-label="Purchased">{{ e.purchased_at|date:"j M Y, H:i" }}</td>
+            <td data-label="Expires">{% if e.access_expires_at %}{{ e.access_expires_at|date:"j M Y" }}{% else %}<span class="muted">-</span>{% endif %}</td>
           </tr>
         {% empty %}
-          <tr><td colspan="6" class="empty muted">No students yet.</td></tr>
+          <tr><td colspan="6" class="empty-cell muted">No students yet.</td></tr>
         {% endfor %}
         </tbody>
       </table>

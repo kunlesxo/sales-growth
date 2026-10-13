@@ -29,7 +29,7 @@
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
-  body{margin:0;font-family:var(--sans);background:var(--cream);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;padding-bottom:84px}
+  body{margin:0;font-family:var(--sans);background:var(--cream);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;padding-bottom:84px}
   img{max-width:100%;display:block}
   a{color:inherit}
   h1,h2,h3{font-family:var(--serif);margin:0;color:var(--brown-deep);line-height:1.15;font-weight:600}
@@ -68,9 +68,9 @@
   .btn-lg{padding:17px 30px;font-size:17px}
   .btn-block{display:block;width:100%}
 
-  /* Header: cream, sticky */
-  header.top{position:sticky;top:0;z-index:50;background:rgba(251,243,232,.96);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:border-color .4s var(--ease),box-shadow .4s var(--ease)}
-  header.top.is-scrolled{border-bottom-color:var(--line);box-shadow:0 12px 24px -22px rgba(46,26,17,.5)}
+  /* Header: solid cream, sticky, and never changes on scroll. No backdrop blur or shadow
+     (both make sticky bars jitter on phones). */
+  header.top{position:sticky;top:0;z-index:50;background:var(--cream);border-bottom:1px solid var(--line)}
   .bar{display:flex;align-items:center;justify-content:space-between;gap:16px;height:80px}
   .logo{height:54px;width:auto}
   .nav{display:flex;align-items:center;gap:26px}
@@ -183,9 +183,8 @@
   .refund-card strong{color:var(--brown-deep)}
   .refund-card a{color:var(--brown-mid);font-weight:700}
 
-  /* Sticky pay bar */
-  .sticky-pay{position:fixed;left:0;right:0;bottom:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 20px;background:rgba(255,252,247,.97);border-top:1px solid var(--line);box-shadow:0 -10px 24px -14px rgba(46,26,17,.35);transform:translateY(110%);transition:transform .45s var(--ease)}
-  .sticky-pay.is-visible{transform:none}
+  /* Pay bar: fixed to the bottom and always in place. It does not slide or fade in. */
+  .sticky-pay{position:fixed;left:0;right:0;bottom:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 20px calc(12px + env(safe-area-inset-bottom));background:var(--cream-card);border-top:1px solid var(--line)}
   .sticky-pay span{font-weight:700;color:var(--brown-deep);font-size:15px}
   @media(min-width:900px){.sticky-pay{justify-content:center;gap:28px}}
 
@@ -405,21 +404,6 @@
 <script>
 (function(){
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  // Header border and sticky pay bar
-  var header = document.getElementById('site-header');
-  var sticky = document.getElementById('sticky-pay');
-  var ticking = false;
-  function onScroll(){
-    var y = window.scrollY;
-    header.classList.toggle('is-scrolled', y > 8);
-    sticky.classList.toggle('is-visible', y > 560);
-    ticking = false;
-  }
-  window.addEventListener('scroll', function(){
-    if (!ticking){ requestAnimationFrame(onScroll); ticking = true; }
-  }, { passive: true });
-  onScroll();
 
   // Reveal sections as they scroll into view
   var blocks = document.querySelectorAll('main > section:not(.hero) > .wrap');
