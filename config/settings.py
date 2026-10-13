@@ -23,7 +23,7 @@ if not SECRET_KEY:
 RAILWAY_DOMAIN = env("RAILWAY_PUBLIC_DOMAIN")
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "healthcheck.railway.app", ".up.railway.app"]
 if RAILWAY_DOMAIN:
-ALLOWED_HOSTS.append(RAILWAY_DOMAIN)
+    ALLOWED_HOSTS.append(RAILWAY_DOMAIN)
 ALLOWED_HOSTS += [h for h in env("EXTRA_ALLOWED_HOSTS").split(",") if h]
 CSRF_TRUSTED_ORIGINS = [f"https://{RAILWAY_DOMAIN}"] if RAILWAY_DOMAIN else []
 
