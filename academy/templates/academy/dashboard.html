@@ -1,34 +1,64 @@
 {% extends "admin/base_site.html" %}
+{% load static %}
 {% block title %}Students &amp; payments | {{ site_title }}{% endblock %}
+{% block bodyclass %}{{ block.super }} sga-admin{% endblock %}
 {% block breadcrumbs %}<div class="breadcrumbs"><a href="{% url 'admin:index' %}">Home</a> &rsaquo; Dashboard</div>{% endblock %}
+
+{% block branding %}
+<img src="{% static 'academy/img/sales-logo-transparent.png' %}" alt="Sales Growth Academy">
+<h1 id="site-name"><a href="{% url 'admin:index' %}">Sales Growth Academy</a></h1>
+{% endblock %}
 
 {% block extrastyle %}
 {{ block.super }}
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Karla:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  .sga{--brown-deep:#2E1A11;--brown:#4A2A1C;--brown-mid:#6B4632;--peach:#F1C7A3;--peach-soft:#F8DFC4;--cream:#FBF3E8;--cream-card:#FFFCF7;--line:rgba(42,28,20,.12);--ink:#2A1C14;--muted:#6B5645;font-family:Karla,system-ui,sans-serif;color:var(--ink)}
-  #header{background:var(--brown-deep)}
-  .sga h1{font-family:Fraunces,Georgia,serif;font-size:1.9rem;font-weight:600;color:var(--brown-deep);margin:0 0 6px}
-  .sga h2{font-family:Fraunces,Georgia,serif;font-size:1.15rem;font-weight:600;color:var(--brown-deep);margin:0}
-  .sga .sga-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px;margin:8px 0 26px}
-  .sga .help{margin:0;color:var(--muted);max-width:46em;font-size:15px}
-  .sga .btn{display:inline-block;padding:11px 20px;border-radius:999px;background:var(--brown-deep);color:var(--cream);font-weight:700;font-size:14px;text-decoration:none;white-space:nowrap;box-shadow:0 12px 22px -14px rgba(46,26,17,.6)}
-  .sga .btn:hover{background:var(--brown);color:var(--cream)}
-  .sga .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin:0 0 28px}
-  .sga .stat{background:var(--cream-card);border:1px solid var(--line);border-top:4px solid var(--brown-deep);border-radius:14px;padding:20px 22px;color:var(--muted);font-size:14px;font-weight:600}
-  .sga .stat span{display:block;margin-bottom:4px;font-family:Fraunces,Georgia,serif;font-size:2.1rem;font-weight:600;line-height:1.1;color:var(--brown-deep)}
-  .sga .panel{background:var(--cream-card);border:1px solid var(--line);border-radius:16px;overflow:hidden}
-  .sga .panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 22px;border-bottom:1px solid var(--line);background:var(--cream)}
-  .sga .panel-head a{font-weight:700;font-size:14px;color:var(--brown-mid)}
+  /* Palette: same as the landing page. Set on body so the admin's dark mode can't override it. */
+  body.sga-admin{
+    --body-bg:#FBF3E8; --body-fg:#2A1C14; --body-quiet-color:#6B5645; --body-loud-color:#2E1A11;
+    --border-color:rgba(42,28,20,.12); --link-fg:#6B4632; --header-bg:#FBF3E8;
+    --header-link-color:#2E1A11; --button-bg:#2E1A11; --button-fg:#FBF3E8;
+    background:#FBF3E8; color:#2A1C14; font-family:Karla,system-ui,sans-serif;
+  }
+  body.sga-admin #container{background:transparent}
+  body.sga-admin #header{background:#FBF3E8;border-bottom:1px solid rgba(42,28,20,.12);padding:14px 24px;box-shadow:none}
+  body.sga-admin #branding{display:flex;align-items:center;gap:14px}
+  body.sga-admin #branding img{height:46px;width:auto;display:block}
+  body.sga-admin #site-name{margin:0;font-family:Fraunces,Georgia,serif;font-size:1.25rem;font-weight:600}
+  body.sga-admin #site-name a,body.sga-admin #site-name a:link,body.sga-admin #site-name a:visited{color:#2E1A11;text-decoration:none}
+  body.sga-admin #user-tools,body.sga-admin #user-tools a{color:#6B4632}
+  body.sga-admin #user-tools a:hover{color:#2E1A11}
+  body.sga-admin .breadcrumbs{background:transparent;color:#6B5645;padding:12px 24px;border-bottom:1px solid rgba(42,28,20,.08)}
+  body.sga-admin .breadcrumbs a{color:#6B4632}
+
+  .sga{font-family:Karla,system-ui,sans-serif;color:#2A1C14;max-width:1180px}
+  .sga h1{font-family:Fraunces,Georgia,serif;font-size:2rem;font-weight:600;color:#2E1A11;margin:0 0 6px;line-height:1.15}
+  .sga h2{font-family:Fraunces,Georgia,serif;font-size:1.15rem;font-weight:600;color:#2E1A11;margin:0}
+  .sga .sga-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px;margin:8px 0 28px}
+  .sga .help{margin:0;color:#6B5645;max-width:46em;font-size:15px}
+  .sga .btn{display:inline-block;padding:12px 22px;border-radius:999px;background:#2E1A11;color:#FBF3E8;font-weight:700;font-size:14px;text-decoration:none;white-space:nowrap;box-shadow:0 14px 24px -16px rgba(46,26,17,.7);transition:background-color .3s,transform .3s}
+  .sga .btn:hover{background:#4A2A1C;color:#FBF3E8;transform:translateY(-2px)}
+  .sga .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin:0 0 30px}
+  .sga .stat{background:#FFFCF7;border:1px solid rgba(42,28,20,.12);border-top:4px solid #2E1A11;border-radius:14px;padding:20px 22px;color:#6B5645;font-size:14px;font-weight:600;box-shadow:0 16px 28px -26px rgba(46,26,17,.5);animation:rise .7s cubic-bezier(.2,.7,.2,1) both}
+  .sga .stat:nth-child(2){animation-delay:.05s}.sga .stat:nth-child(3){animation-delay:.1s}.sga .stat:nth-child(4){animation-delay:.15s}
+  .sga .stat:nth-child(5){animation-delay:.2s}.sga .stat:nth-child(6){animation-delay:.25s}.sga .stat:nth-child(7){animation-delay:.3s}
+  @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  .sga .stat span{display:block;margin-bottom:4px;font-family:Fraunces,Georgia,serif;font-size:2.1rem;font-weight:600;line-height:1.1;color:#2E1A11}
+  .sga .panel{background:#FFFCF7;border:1px solid rgba(42,28,20,.12);border-radius:16px;overflow:hidden;box-shadow:0 20px 40px -30px rgba(46,26,17,.45)}
+  .sga .panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 22px;border-bottom:1px solid rgba(42,28,20,.12);background:#FBF3E8}
+  .sga .panel-head a{font-weight:700;font-size:14px;color:#6B4632;text-decoration:none}
+  .sga .panel-head a:hover{text-decoration:underline}
   .sga .table-wrap{overflow-x:auto}
   .sga table.dash{width:100%;min-width:720px;border-collapse:collapse}
-  .sga table.dash th{padding:13px 18px;background:var(--brown-deep);color:var(--peach-soft);font-size:12.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;text-align:left;white-space:nowrap}
-  .sga table.dash td{padding:13px 18px;border-bottom:1px solid var(--line);font-size:15px;text-align:left;color:var(--ink)}
+  .sga table.dash th{padding:13px 18px;background:#2E1A11;color:#F8DFC4;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;text-align:left;white-space:nowrap}
+  .sga table.dash td{padding:13px 18px;border-bottom:1px solid rgba(42,28,20,.1);font-size:15px;text-align:left;color:#2A1C14}
   .sga table.dash tr:last-child td{border-bottom:0}
-  .sga table.dash tbody tr:hover{background:rgba(241,199,163,.18)}
-  .sga .muted{color:var(--muted)}
+  .sga table.dash tbody tr{transition:background-color .25s}
+  .sga table.dash tbody tr:hover{background:rgba(241,199,163,.2)}
+  .sga .muted{color:#6B5645}
   .sga .empty{padding:30px 16px;text-align:center}
   .sga .ref{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13.5px}
+  @media (prefers-reduced-motion: reduce){ .sga .stat{animation:none} }
 </style>
 {% endblock %}
 

@@ -114,6 +114,7 @@ COURSE = {
     "name": "Montessori & Learning Resources Masterclass",
     "instructor": "Abraham Precious",
     "start_label": "28 December 2026, 8:00 PM WAT",
+    "start_iso": "2026-12-28T20:00:00+01:00",   # drives the countdown on the landing page
     "price_ngn_kobo": 3_500_000,
     "price_ghs_pesewas": int(env("PRICE_GHS_PESEWAS") or 0),
     "tolerance_pct": 5,          # Paystack fee is passed to the customer: accept up to 5% above price

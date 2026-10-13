@@ -5,11 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{{ course.name }} | {{ course.brand }}</title>
 <meta name="description" content="A 5-day practical masterclass on sourcing Montessori and learning resources from China. {{ ngn_label }}. Starts {{ course.start_label }}.">
-<meta name="theme-color" content="#2E1A11">
-<link rel="icon" href="{% static 'academy/img/sales-logo.png' %}">
+<meta name="theme-color" content="#FBF3E8">
+<link rel="icon" href="{% static 'academy/img/sales-logo-transparent.png' %}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add('js');</script>
 <style>
   :root{
     --brown-deep:#2E1A11;
@@ -22,7 +23,7 @@
     --ink:#2A1C14;
     --muted:#6B5645;
     --line:rgba(42,28,20,.12);
-    --radius:16px;
+    --ease:cubic-bezier(.2,.7,.2,1);
     --serif:"Fraunces",Georgia,"Times New Roman",serif;
     --sans:"Karla",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
   }
@@ -34,7 +35,7 @@
   h1,h2,h3{font-family:var(--serif);margin:0;color:var(--brown-deep);line-height:1.15;font-weight:600}
   h3{font-family:var(--sans);font-size:17px;font-weight:700;margin-bottom:4px}
   p{margin:0 0 1em}
-  :focus-visible{outline:3px solid var(--peach);outline-offset:3px}
+  :focus-visible{outline:3px solid var(--brown-mid);outline-offset:3px}
 
   .wrap{max-width:1120px;margin:0 auto;padding:0 22px}
   .narrow{max-width:800px}
@@ -51,32 +52,35 @@
   .lead{font-size:1.1rem;color:var(--muted)}
   .center{text-align:center}
   .fine{font-size:14px;color:var(--muted)}
+  .eyebrow{font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--brown-mid);margin:0 0 10px}
 
   /* Buttons */
-  .btn{display:inline-block;text-align:center;font-family:var(--sans);font-weight:700;font-size:16px;line-height:1.2;padding:14px 26px;border:0;border-radius:999px;cursor:pointer;text-decoration:none;transition:background .2s,transform .15s,box-shadow .2s}
-  .btn:active{transform:scale(.98)}
+  .btn{display:inline-block;text-align:center;font-family:var(--sans);font-weight:700;font-size:16px;line-height:1.2;padding:14px 26px;border:0;border-radius:999px;cursor:pointer;text-decoration:none;transition:background-color .3s var(--ease),color .3s var(--ease),transform .3s var(--ease),box-shadow .3s var(--ease)}
+  .btn:hover{transform:translateY(-2px)}
+  .btn:active{transform:translateY(0) scale(.98)}
   .btn-peach{background:var(--peach);color:var(--brown-deep)}
-  .btn-peach:hover{background:var(--peach-soft)}
-  .btn-brown{background:var(--brown-deep);color:var(--cream);box-shadow:0 14px 26px -12px rgba(46,26,17,.55)}
-  .btn-brown:hover{background:var(--brown)}
+  .btn-peach:hover{background:var(--peach-soft);box-shadow:0 14px 26px -14px rgba(241,199,163,.8)}
+  .btn-brown{background:var(--brown-deep);color:var(--cream);box-shadow:0 14px 26px -14px rgba(46,26,17,.6)}
+  .btn-brown:hover{background:var(--brown);box-shadow:0 18px 30px -14px rgba(46,26,17,.7)}
   .btn-line{background:transparent;color:var(--cream);box-shadow:inset 0 0 0 1.5px var(--peach)}
-  .btn-line:hover{background:rgba(241,199,163,.12)}
+  .btn-line:hover{background:rgba(241,199,163,.14)}
   .btn-sm{padding:10px 18px;font-size:15px}
   .btn-lg{padding:17px 30px;font-size:17px}
   .btn-block{display:block;width:100%}
 
-  /* Header (sticky, same behaviour as before) */
-  header.top{position:sticky;top:0;z-index:50;background:var(--brown-deep);border-bottom:1px solid transparent;transition:border-color .3s,box-shadow .3s}
-  header.top.is-scrolled{border-bottom-color:rgba(241,199,163,.18);box-shadow:0 10px 24px -18px rgba(0,0,0,.6)}
-  .bar{display:flex;align-items:center;justify-content:space-between;gap:16px;height:76px}
-  .logo-wrap{display:inline-flex;background:var(--cream);border-radius:10px;padding:6px 12px}
-  .logo{height:40px;width:auto}
+  /* Header: cream, sticky */
+  header.top{position:sticky;top:0;z-index:50;background:rgba(251,243,232,.96);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:border-color .4s var(--ease),box-shadow .4s var(--ease)}
+  header.top.is-scrolled{border-bottom-color:var(--line);box-shadow:0 12px 24px -22px rgba(46,26,17,.5)}
+  .bar{display:flex;align-items:center;justify-content:space-between;gap:16px;height:80px}
+  .logo{height:54px;width:auto}
   .nav{display:flex;align-items:center;gap:26px}
-  .nav a.link{color:var(--peach-soft);font-weight:600;font-size:15px;text-decoration:none}
-  .nav a.link:hover{color:#fff}
-  @media(max-width:640px){.nav a.link{display:none}}
+  .nav a.link{position:relative;color:var(--brown-mid);font-weight:600;font-size:15px;text-decoration:none;padding:6px 0;transition:color .3s var(--ease)}
+  .nav a.link::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--brown);transform:scaleX(0);transform-origin:left;transition:transform .35s var(--ease)}
+  .nav a.link:hover{color:var(--brown-deep)}
+  .nav a.link:hover::after{transform:scaleX(1)}
+  @media(max-width:640px){.nav a.link{display:none}.logo{height:46px}}
 
-  /* Hero */
+  /* Hero (brown) */
   .hero{background:radial-gradient(90% 80% at 0% 0%,#5a3623 0%,transparent 60%),var(--brown-deep);color:var(--cream);padding:56px 0 80px}
   .hero-grid{display:grid;gap:48px;align-items:center}
   @media(min-width:860px){
@@ -98,30 +102,55 @@
   .founder strong{display:block;font-family:var(--serif);font-size:clamp(1.5rem,3.4vw,1.9rem);line-height:1.15;color:var(--peach);text-shadow:0 2px 12px rgba(0,0,0,.45)}
   .founder span{display:block;margin-top:6px;font-weight:600;font-size:15px;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.5)}
 
+  /* Entrance animation for the hero (plays on load, no JS needed) */
+  @keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+  @keyframes fadeScale{from{opacity:0;transform:translateY(24px) scale(.97)}to{opacity:1;transform:none}}
+  .hero .rise{animation:rise .9s var(--ease) both;animation-delay:var(--d,0ms)}
+  .reel{animation:fadeScale 1.1s var(--ease) .15s both}
+
+  /* Countdown */
+  .countdown-band{background:var(--cream-card);border-bottom:1px solid var(--line);padding:34px 0}
+  .cd-label{text-align:center;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--brown-mid);margin-bottom:16px}
+  .cd-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:560px;margin:0 auto}
+  .cd-cell{background:var(--brown-deep);color:var(--peach-soft);border-radius:14px;padding:16px 4px;text-align:center;box-shadow:0 16px 28px -22px rgba(46,26,17,.7)}
+  .cd-num{display:block;font-family:var(--serif);font-size:30px;font-weight:600;color:#fff;font-variant-numeric:tabular-nums;line-height:1.1}
+  @media(min-width:640px){.cd-num{font-size:40px}}
+  .cd-unit{font-size:11px;letter-spacing:.12em;text-transform:uppercase;opacity:.8}
+  .cd-num.tick{animation:tick .5s var(--ease)}
+  @keyframes tick{from{opacity:0;transform:translateY(-38%)}to{opacity:1;transform:none}}
+  .cd-done{display:none;text-align:center;font-family:var(--serif);font-size:1.4rem;color:var(--brown-deep)}
+
+  /* Scroll reveal (applied by JS only; content stays visible without JS) */
+  html.js .reveal{opacity:0;transform:translateY(22px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+  html.js .reveal.in{opacity:1;transform:none}
+
   /* Outcomes */
   .outcomes{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
-  .outcomes article{padding:30px 28px;background:var(--cream);border:1px solid var(--line);border-radius:14px}
+  .outcomes article{padding:30px 28px;background:var(--cream);border:1px solid var(--line);border-radius:14px;transition:transform .4s var(--ease),box-shadow .4s var(--ease),border-color .4s var(--ease)}
+  .outcomes article:hover{transform:translateY(-4px);border-color:rgba(74,42,28,.3);box-shadow:0 22px 34px -26px rgba(46,26,17,.5)}
   .outcomes p{margin:0;color:var(--muted)}
 
-  /* Platforms (dark) */
+  /* Platforms (brown section) */
   .dark{background:var(--brown-deep);color:var(--peach-soft)}
   .dark h2{color:#fff}
   .dark .lead{color:rgba(251,243,232,.8)}
   .split{display:grid;gap:40px}
   @media(min-width:900px){.split{grid-template-columns:1fr 1.1fr;gap:72px;align-items:start}}
   .platforms{list-style:none;margin:0;padding:0;display:grid;gap:12px}
-  .platforms li{display:grid;gap:4px;padding:18px 22px;border:1px solid rgba(241,199,163,.18);border-radius:12px;background:rgba(251,243,232,.03)}
+  .platforms li{display:grid;gap:4px;padding:18px 22px;border:1px solid rgba(241,199,163,.18);border-radius:12px;background:rgba(251,243,232,.03);transition:border-color .35s var(--ease),background-color .35s var(--ease)}
+  .platforms li:hover{border-color:rgba(241,199,163,.5);background:rgba(251,243,232,.06)}
   .platforms strong{font-family:var(--serif);font-size:1.1rem;color:var(--peach)}
   .platforms span{color:rgba(251,243,232,.82);font-size:15px}
 
   /* Curriculum */
   .days{list-style:none;margin:0;padding:0;display:grid;gap:12px;max-width:760px}
-  .days li{display:flex;gap:18px;align-items:flex-start;padding:20px 22px;background:var(--cream-card);border:1px solid var(--line);border-radius:14px}
+  .days li{display:flex;gap:18px;align-items:flex-start;padding:20px 22px;background:var(--cream-card);border:1px solid var(--line);border-radius:14px;transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
+  .days li:hover{transform:translateX(4px);box-shadow:0 16px 26px -22px rgba(46,26,17,.5)}
   .day{flex:none;font-family:var(--serif);font-weight:600;font-size:15px;color:var(--peach);background:var(--brown-deep);border-radius:8px;padding:7px 12px;min-width:68px;text-align:center}
   .days p{margin:0;color:var(--muted);font-size:15px}
 
   /* Ghana */
-  .ghana{background:var(--cream-card);border:1px solid var(--line);border-radius:var(--radius);padding:30px 28px}
+  .ghana{background:var(--cream-card);border:1px solid var(--line);border-radius:var(--radius,16px);padding:30px 28px}
   .ghana p{color:var(--muted)}
 
   /* Enroll */
@@ -129,7 +158,7 @@
   .enroll-card h2{margin-bottom:6px}
   .enroll-card .price{margin:10px 0 4px;font-family:var(--serif);font-weight:600;font-size:clamp(2.4rem,6vw,3.2rem);color:var(--brown-deep);line-height:1.1}
   .price-note{color:var(--muted);margin-bottom:28px}
-  .enroll-meta{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:0 0 28px;text-align:left;border:1px solid var(--line);border-radius:var(--radius);background:var(--cream)}
+  .enroll-meta{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:0 0 28px;text-align:left;border:1px solid var(--line);border-radius:16px;background:var(--cream)}
   .enroll-meta div{padding:16px 18px;border-bottom:1px solid var(--line)}
   .enroll-meta div:nth-child(odd){border-right:1px solid var(--line)}
   .enroll-meta div:nth-last-child(-n+2){border-bottom:0}
@@ -144,31 +173,37 @@
   .recover{margin:36px 0 0;padding-top:28px;border-top:1px solid var(--line);text-align:left}
   .recover label{display:block;font-weight:700;margin-bottom:10px;font-size:15px;color:var(--brown-deep)}
   .recover .row{display:flex;flex-wrap:wrap;gap:10px}
-  .recover input{flex:1 1 200px;padding:13px 16px;border:1px solid rgba(42,28,20,.22);border-radius:10px;font:inherit;background:#fff;color:var(--ink)}
-  .recover input:focus{outline:3px solid var(--peach);outline-offset:1px;border-color:var(--brown)}
+  .recover input{flex:1 1 200px;padding:13px 16px;border:1px solid rgba(42,28,20,.22);border-radius:12px;font:inherit;background:#fff;color:var(--ink);transition:border-color .3s var(--ease),box-shadow .3s var(--ease)}
+  .recover input:focus{outline:none;border-color:var(--brown-mid);box-shadow:0 0 0 4px rgba(241,199,163,.45)}
 
   /* Refund */
-  .refund-card{background:var(--cream-card);border:1px solid var(--line);border-left:5px solid var(--brown-deep);border-radius:var(--radius);padding:28px 28px}
+  .refund-card{background:var(--cream-card);border:1px solid var(--line);border-left:5px solid var(--brown-deep);border-radius:16px;padding:28px}
   .refund-card p{color:var(--muted);margin:0 0 12px;font-size:16px}
   .refund-card p:last-child{margin-bottom:0}
   .refund-card strong{color:var(--brown-deep)}
   .refund-card a{color:var(--brown-mid);font-weight:700}
 
   /* Sticky pay bar */
-  .sticky-pay{position:fixed;left:0;right:0;bottom:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 20px;background:var(--cream-card);border-top:1px solid var(--line);box-shadow:0 -10px 24px -14px rgba(46,26,17,.4);transform:translateY(105%);transition:transform .35s ease}
+  .sticky-pay{position:fixed;left:0;right:0;bottom:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 20px;background:rgba(255,252,247,.97);border-top:1px solid var(--line);box-shadow:0 -10px 24px -14px rgba(46,26,17,.35);transform:translateY(110%);transition:transform .45s var(--ease)}
   .sticky-pay.is-visible{transform:none}
   .sticky-pay span{font-weight:700;color:var(--brown-deep);font-size:15px}
   @media(min-width:900px){.sticky-pay{justify-content:center;gap:28px}}
 
-  /* Footer (the brown you liked) */
-  footer.foot{background:var(--brown-deep);color:rgba(251,243,232,.7);padding:40px 0 30px;font-size:14px}
-  footer.foot .wrap{display:flex;flex-direction:column;gap:8px}
+  /* Footer: cream, matching the header */
+  footer.foot{background:var(--cream);border-top:1px solid var(--line);color:var(--muted);padding:44px 0 34px;font-size:14px}
+  footer.foot .logo{height:46px;margin-bottom:14px}
+  footer.foot .foot-name{font-family:var(--serif);color:var(--brown-deep);font-size:18px;font-weight:600;margin:0 0 4px}
   footer.foot p{margin:0}
-  footer.foot a{color:var(--peach);font-weight:600;text-decoration:none}
-  footer.foot a:hover{text-decoration:underline}
-  footer.foot .social{display:flex;gap:20px;flex-wrap:wrap}
+  footer.foot .links{display:flex;flex-wrap:wrap;gap:12px 24px;margin:20px 0;padding-top:20px;border-top:1px solid var(--line)}
+  footer.foot a{color:var(--brown-deep);font-weight:700;text-decoration:none;transition:color .3s var(--ease)}
+  footer.foot a:hover{color:var(--brown-mid);text-decoration:underline}
+  footer.foot .legal{font-size:12.5px;color:var(--muted);opacity:.85}
 
-  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} *{transition:none !important} }
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto}
+    *,*::before,*::after{animation:none !important;transition:none !important}
+    html.js .reveal{opacity:1;transform:none}
+  }
 </style>
 </head>
 <body>
@@ -176,13 +211,13 @@
 <header class="top" id="site-header">
   <div class="wrap bar">
     <a href="#top" aria-label="{{ course.brand }}">
-      <span class="logo-wrap"><img class="logo" src="{% static 'academy/img/sales-logo.png' %}" alt="{{ course.brand }}"></span>
+      <img class="logo" src="{% static 'academy/img/sales-logo-transparent.png' %}" alt="{{ course.brand }}">
     </a>
     <nav class="nav" aria-label="Primary">
       <a class="link" href="#curriculum">Curriculum</a>
       <a class="link" href="#refund">Refund policy</a>
       <a class="link" href="#enroll">Already enrolled?</a>
-      <a class="btn btn-peach btn-sm" href="{{ paystack_url }}">Enroll now</a>
+      <a class="btn btn-brown btn-sm" href="{{ paystack_url }}">Enroll now</a>
     </nav>
   </div>
 </header>
@@ -193,19 +228,19 @@
   <section class="hero">
     <div class="wrap hero-grid">
       <div>
-        <p class="kicker">{{ course.brand }} masterclass · Starts {{ course.start_label }}</p>
-        <h1>Source Montessori and learning resources from China, at a cost you can calculate.</h1>
-        <p class="lead">A 5-day practical course on finding reliable suppliers, working out your true landed cost, and importing without middlemen.</p>
-        <div class="cta-row">
+        <p class="kicker rise" style="--d:0ms">{{ course.brand }} masterclass · Starts {{ course.start_label }}</p>
+        <h1 class="rise" style="--d:90ms">Source Montessori and learning resources from China, at a cost you can calculate.</h1>
+        <p class="lead rise" style="--d:180ms">A 5-day practical course on finding reliable suppliers, working out your true landed cost, and importing without middlemen.</p>
+        <div class="cta-row rise" style="--d:260ms">
           <a class="btn btn-peach btn-lg" href="{{ paystack_url }}">Enroll for {{ ngn_label }}</a>
           <a class="btn btn-line btn-lg" href="#curriculum">See the curriculum</a>
         </div>
-        <ul class="assure">
+        <ul class="assure rise" style="--d:340ms">
           <li>5 recorded training days</li>
           <li>12 months of classroom access</li>
           <li>Secure checkout with Paystack</li>
         </ul>
-        {% if ghs_enabled %}<p class="fine">Paying from Ghana? Pay {{ ghs_label }} by card or mobile money on the same secure page.</p>{% endif %}
+        {% if ghs_enabled %}<p class="fine rise" style="--d:400ms">Paying from Ghana? Pay {{ ghs_label }} by card or mobile money on the same secure page.</p>{% endif %}
       </div>
 
       <div class="reel">
@@ -217,6 +252,20 @@
       </div>
     </div>
   </section>
+
+<!-- COUNTDOWN -->
+<div class="countdown-band" id="countdown-band">
+  <div class="wrap">
+    <p class="cd-label">Class starts in</p>
+    <div class="cd-grid" id="countdown" data-start="{{ course.start_iso }}" aria-label="Countdown to class start" role="timer">
+      <div class="cd-cell"><span class="cd-num" id="cd-days">--</span><span class="cd-unit">Days</span></div>
+      <div class="cd-cell"><span class="cd-num" id="cd-hours">--</span><span class="cd-unit">Hours</span></div>
+      <div class="cd-cell"><span class="cd-num" id="cd-mins">--</span><span class="cd-unit">Minutes</span></div>
+      <div class="cd-cell"><span class="cd-num" id="cd-secs">--</span><span class="cd-unit">Seconds</span></div>
+    </div>
+    <p class="cd-done" id="cd-done">The class has started. Log in to the Telegram classroom.</p>
+  </div>
+</div>
 
   <!-- OUTCOMES -->
   <section class="bg-card">
@@ -319,7 +368,7 @@
   <section class="bg-cream" id="refund">
     <div class="wrap narrow">
       <div class="head">
-        <p class="fine" style="font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--brown-mid)">Refund policy</p>
+        <p class="eyebrow">Refund policy</p>
         <h2>Refunds within 72 hours of joining</h2>
       </div>
       <div class="refund-card">
@@ -339,32 +388,87 @@
 
 <footer class="foot">
   <div class="wrap">
-    <div style="font-family:var(--serif);color:#fff;font-size:18px">{{ course.brand }}</div>
+    <img class="logo" src="{% static 'academy/img/sales-logo-transparent.png' %}" alt="{{ course.brand }}">
+    <p class="foot-name">{{ course.brand }}</p>
     <p>{{ course.name }}</p>
-    <p style="font-size:12.5px;opacity:.75;margin-top:6px">Trading name: Sales Growth Academy · Legal entity: Books Roundabout Nigeria Limited</p>
-    <p class="social" style="margin-top:14px;padding-top:16px;border-top:1px solid rgba(251,243,232,.14)">
+    <div class="links">
       <a href="https://www.instagram.com/salesgrowth_academy" target="_blank" rel="noopener noreferrer">Instagram</a>
       <a href="https://www.facebook.com/share/1Dtz6ctwdK/" target="_blank" rel="noopener noreferrer">Facebook</a>
       {% if support_url %}<a href="{{ support_url }}" target="_blank" rel="noopener noreferrer">WhatsApp</a>{% endif %}
-    </p>
-    <p style="font-size:12px;opacity:.5;margin-top:10px"><a href="#refund" style="color:inherit;font-weight:400;text-decoration:underline">Refund Policy</a></p>
+      <a href="#refund">Refund policy</a>
+    </div>
+    <p class="legal">Trading name: Sales Growth Academy · Legal entity: Books Roundabout Nigeria Limited</p>
+    <p class="legal" style="margin-top:6px">© 2026 Sales Growth Academy. All rights reserved.</p>
   </div>
 </footer>
 
 <script>
-  const header = document.getElementById('site-header');
-  const sticky = document.getElementById('sticky-pay');
-  let ticking = false;
+(function(){
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Header border and sticky pay bar
+  var header = document.getElementById('site-header');
+  var sticky = document.getElementById('sticky-pay');
+  var ticking = false;
   function onScroll(){
-    const y = window.scrollY;
+    var y = window.scrollY;
     header.classList.toggle('is-scrolled', y > 8);
-    sticky.classList.toggle('is-visible', y > 520);
+    sticky.classList.toggle('is-visible', y > 560);
     ticking = false;
   }
-  window.addEventListener('scroll', () => {
+  window.addEventListener('scroll', function(){
     if (!ticking){ requestAnimationFrame(onScroll); ticking = true; }
-  }, { passive:true });
+  }, { passive: true });
   onScroll();
+
+  // Reveal sections as they scroll into view
+  var blocks = document.querySelectorAll('main > section:not(.hero) > .wrap');
+  if ('IntersectionObserver' in window && !reduce){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    blocks.forEach(function(el){ el.classList.add('reveal'); io.observe(el); });
+  }
+
+  // Countdown
+  var box = document.getElementById('countdown');
+  var band = document.getElementById('countdown-band');
+  var target = new Date(box.getAttribute('data-start')).getTime();
+  if (isNaN(target)){ band.style.display = 'none'; return; }
+
+  var ids = { days: 'cd-days', hours: 'cd-hours', mins: 'cd-mins', secs: 'cd-secs' };
+  var last = {};
+  function set(key, value){
+    var el = document.getElementById(ids[key]);
+    var text = String(value).padStart(2, '0');
+    if (last[key] === text) return;
+    last[key] = text;
+    el.textContent = text;
+    if (!reduce){
+      el.classList.remove('tick');
+      void el.offsetWidth;          // restart the animation
+      el.classList.add('tick');
+    }
+  }
+  function tick(){
+    var diff = target - Date.now();
+    if (diff <= 0){
+      box.style.display = 'none';
+      document.getElementById('cd-done').style.display = 'block';
+      return false;
+    }
+    set('days',  Math.floor(diff / 86400000));
+    set('hours', Math.floor((diff % 86400000) / 3600000));
+    set('mins',  Math.floor((diff % 3600000) / 60000));
+    set('secs',  Math.floor((diff % 60000) / 1000));
+    return true;
+  }
+  if (tick()){
+    var timer = setInterval(function(){ if (!tick()) clearInterval(timer); }, 1000);
+  }
+})();
 </script>
 
 </body>
