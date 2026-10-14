@@ -21,7 +21,7 @@ if not SECRET_KEY:
         raise RuntimeError("DJANGO_SECRET_KEY is not set. Add it in Railway > Variables.")
 
 RAILWAY_DOMAIN = env("RAILWAY_PUBLIC_DOMAIN")
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", "healthcheck.railway.app", ".up.railway.app", "salesgrowthacademy.com]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "healthcheck.railway.app", ".up.railway.app", "salesgrowthacademy.com" ]
 if RAILWAY_DOMAIN:
     ALLOWED_HOSTS.append(RAILWAY_DOMAIN)
 ALLOWED_HOSTS += [h for h in env("EXTRA_ALLOWED_HOSTS").split(",") if h]
