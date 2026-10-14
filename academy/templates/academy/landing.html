@@ -44,11 +44,10 @@
 
   .bg-cream{background:var(--cream)}
   .bg-card{background:var(--cream-card);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-  .bg-brown{background:var(--brown-deep);color:var(--peach-soft)}
-  .bg-mid{background:var(--brown);color:var(--cream)}
 
   .head{max-width:44rem;margin-bottom:40px}
   .head h2{font-size:clamp(1.9rem,3.6vw,2.5rem);margin-bottom:12px}
+  .head .lead + .lead{margin-top:12px}
   .lead{font-size:1.1rem;color:var(--muted)}
   .center{text-align:center}
   .fine{font-size:14px;color:var(--muted)}
@@ -119,6 +118,8 @@
   .cd-num.tick{animation:tick .5s var(--ease)}
   @keyframes tick{from{opacity:0;transform:translateY(-38%)}to{opacity:1;transform:none}}
   .cd-done{display:none;text-align:center;font-family:var(--serif);font-size:1.4rem;color:var(--brown-deep)}
+  .cd-tagline{text-align:center;margin:24px 0 0;font-family:var(--serif);font-size:1.15rem;color:var(--brown-deep)}
+  .cd-chips{text-align:center;margin:8px 0 0;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--brown-mid)}
 
   /* Scroll reveal (applied by JS only; content stays visible without JS) */
   html.js .reveal{opacity:0;transform:translateY(22px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
@@ -130,24 +131,17 @@
   .outcomes article:hover{transform:translateY(-4px);border-color:rgba(74,42,28,.3);box-shadow:0 22px 34px -26px rgba(46,26,17,.5)}
   .outcomes p{margin:0;color:var(--muted)}
 
-  /* Platforms (brown section) */
-  .dark{background:var(--brown-deep);color:var(--peach-soft)}
-  .dark h2{color:#fff}
-  .dark .lead{color:rgba(251,243,232,.8)}
-  .split{display:grid;gap:40px}
-  @media(min-width:900px){.split{grid-template-columns:1fr 1.1fr;gap:72px;align-items:start}}
-  .platforms{list-style:none;margin:0;padding:0;display:grid;gap:12px}
-  .platforms li{display:grid;gap:4px;padding:18px 22px;border:1px solid rgba(241,199,163,.18);border-radius:12px;background:rgba(251,243,232,.03);transition:border-color .35s var(--ease),background-color .35s var(--ease)}
-  .platforms li:hover{border-color:rgba(241,199,163,.5);background:rgba(251,243,232,.06)}
-  .platforms strong{font-family:var(--serif);font-size:1.1rem;color:var(--peach)}
-  .platforms span{color:rgba(251,243,232,.82);font-size:15px}
-
   /* Curriculum */
   .days{list-style:none;margin:0;padding:0;display:grid;gap:12px;max-width:760px}
   .days li{display:flex;gap:18px;align-items:flex-start;padding:20px 22px;background:var(--cream-card);border:1px solid var(--line);border-radius:14px;transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
   .days li:hover{transform:translateX(4px);box-shadow:0 16px 26px -22px rgba(46,26,17,.5)}
   .day{flex:none;font-family:var(--serif);font-weight:600;font-size:15px;color:var(--peach);background:var(--brown-deep);border-radius:8px;padding:7px 12px;min-width:68px;text-align:center}
-  .days p{margin:0;color:var(--muted);font-size:15px}
+  .days h3{margin:0}
+
+  /* Process line: Watch → Practise → Ask questions → Implement */
+  .flow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:8px 0 26px}
+  .flow span{background:var(--brown-deep);color:var(--peach);font-weight:700;font-size:15px;padding:10px 16px;border-radius:999px}
+  .flow i{font-style:normal;color:var(--brown-mid);font-weight:700}
 
   /* Ghana */
   .ghana{background:var(--cream-card);border:1px solid var(--line);border-radius:var(--radius,16px);padding:30px 28px}
@@ -157,7 +151,8 @@
   .enroll-card{background:var(--cream-card);border:1px solid var(--line);border-top:5px solid var(--brown-deep);border-radius:18px;padding:44px 26px;text-align:center;box-shadow:0 20px 50px -28px rgba(46,26,17,.4)}
   .enroll-card h2{margin-bottom:6px}
   .enroll-card .price{margin:10px 0 4px;font-family:var(--serif);font-weight:600;font-size:clamp(2.4rem,6vw,3.2rem);color:var(--brown-deep);line-height:1.1}
-  .price-note{color:var(--muted);margin-bottom:28px}
+  .price-note{color:var(--muted);margin-bottom:20px}
+  .enroll-note{color:var(--muted);max-width:34em;margin:0 auto 26px}
   .enroll-meta{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:0 0 28px;text-align:left;border:1px solid var(--line);border-radius:16px;background:var(--cream)}
   .enroll-meta div{padding:16px 18px;border-bottom:1px solid var(--line)}
   .enroll-meta div:nth-child(odd){border-right:1px solid var(--line)}
@@ -201,6 +196,11 @@
   .faq summary::-webkit-details-marker{display:none}
   .faq p{margin:10px 0 0;color:var(--muted)}
 
+  .closing{text-align:center}
+  .closing .checks{max-width:640px;margin:0 auto 30px;grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+  .closing .price{font-family:var(--serif);font-size:clamp(2rem,5vw,2.6rem);color:var(--brown-deep);margin:6px 0 4px}
+  .closing .trust{margin-top:16px;font-size:14px;color:var(--muted)}
+
   @media (prefers-reduced-motion: reduce){
     html{scroll-behavior:auto}
     *,*::before,*::after{animation:none !important;transition:none !important}
@@ -230,14 +230,14 @@
     <div class="wrap hero-grid">
       <div>
         <p class="kicker rise" style="--d:0ms">{{ course.brand }} masterclass · Starts {{ course.start_label }}</p>
-        <h1 class="rise" style="--d:90ms">Source Montessori and learning resources from China, at a cost you can calculate.</h1>
-        <p class="lead rise" style="--d:180ms">A 7-day practical course on finding reliable suppliers, working out your true landed cost, and importing without middlemen.</p>
+        <h1 class="rise" style="--d:90ms">Learn how to source Montessori and learning resources directly from China.</h1>
+        <p class="lead rise" style="--d:180ms">A practical 7-day masterclass for Nigerian book vendors, resellers, toy sellers and educational-resource businesses. Learn how to research, source, pay, ship and calculate the true cost of your imports before you spend a naira.</p>
         <div class="cta-row rise" style="--d:260ms">
-          <a class="btn btn-peach btn-lg" href="{{ paystack_url }}">Enroll for {{ ngn_label }}</a>
-          <a class="btn btn-line btn-lg" href="#curriculum">See the curriculum</a>
+          <a class="btn btn-peach btn-lg" href="{{ paystack_url }}">Secure my seat →</a>
+          <a class="btn btn-line btn-lg" href="#curriculum">See what you'll learn ↓</a>
         </div>
         <ul class="assure rise" style="--d:340ms">
-          <li>7 recorded training days</li>
+          <li>7 recorded days, 3 days guide to the actual buying</li>
           <li>12 months of classroom access</li>
           <li>Secure checkout with Paystack</li>
         </ul>
@@ -265,6 +265,9 @@
       <div class="cd-cell"><span class="cd-num" id="cd-secs">--</span><span class="cd-unit">Seconds</span></div>
     </div>
     <p class="cd-done" id="cd-done">The class has started. Log in to the Telegram classroom.</p>
+    <p class="cd-tagline">The source from China</p>
+    <p class="cd-chips">Research • Source • Pay • Ship • Cost</p>
+    <p class="cd-chips">One payment · Verified access · Private Telegram classroom · 12 months</p>
   </div>
 </div>
 
@@ -273,33 +276,34 @@
     <div class="wrap">
       <div class="head">
         <h2>Stop buying blind. Learn the process.</h2>
-        <p class="lead">Many vendors want to sell these products but don't know how to find suppliers, vet them, pay them, ship goods or judge profit. This masterclass covers each step, so you learn to import smarter.</p>
+        <p class="lead">Many vendors want to sell Montessori materials and educational resources but aren't sure where to source them, how to evaluate a supplier, how to pay a Chinese supplier, how shipping works, or whether a product will even be profitable once every cost is added.</p>
+        <p class="lead">This masterclass walks you through that process, step by step. The goal isn't just to teach you how to import – it's to teach you how to import smart.</p>
       </div>
       <p class="eyebrow" style="margin-bottom:20px">10 things you will learn</p>
       <div class="outcomes">
         <article>
           <h3>How to source Montessori products directly from China</h3>
-          <p>Identify the products and where and how they are sourced.</p>
+          <p>Identify products and understand where and how they're sourced.</p>
         </article>
         <article>
-          <h3>How to find and evaluate suppliers</h3>
-          <p>Search major Chinese sourcing and trading platforms, compare suppliers, and check MOQ and supplier details.</p>
+          <h3>How to find and evaluate suppliers on major Chinese sourcing and trading platforms.</h3>
+          <p>Search products, compare suppliers, and understand MOQ and supplier information.</p>
         </article>
         <article>
-          <h3>How to negotiate better prices</h3>
-          <p>Communicate with suppliers and negotiate by quantity.</p>
+          <h3>How to negotiate better supplier prices</h3>
+          <p>Practical supplier communication and quantity-based negotiation.</p>
         </article>
         <article>
-          <h3>How to work around high MOQs</h3>
-          <p>Understand minimum orders, and how group buying makes larger orders possible.</p>
+          <h3>How to understand and work around high MOQs</h3>
+          <p>How minimum order quantities work, and how coordinated group purchasing can make larger orders achievable.</p>
         </article>
         <article>
-          <h3>How to set up Alipay and pay suppliers</h3>
-          <p>Link your account, make the payment, and know what to watch for.</p>
+          <h3>How to set up Alipay and pay Chinese suppliers</h3>
+          <p>The practical payment process, account linking and payment considerations.</p>
         </article>
         <article>
-          <h3>What to do when Alipay has issues</h3>
-          <p>Experience-based guidance on verification and restrictions. It does not guarantee approval or account recovery.</p>
+          <h3>What to do when Alipay has verification or restriction issues</h3>
+          <p>Practical, experience-based guidance on account verification and restrictions. This covers what to try — it does not guarantee approval or recovery of any Alipay account.</p>
         </article>
         <article>
           <h3>How to ship from China to Nigeria</h3>
@@ -307,15 +311,15 @@
         </article>
         <article>
           <h3>How to calculate CBM and your true landed cost</h3>
-          <p>Work out product volume, shipping cost and the total landed cost.</p>
+          <p>Work out product volume, shipping cost, and what your goods actually cost to land in Nigeria.</p>
         </article>
         <article>
           <h3>How to calculate your selling price and profit</h3>
-          <p>Decide whether an import is worth it before you commit your money.</p>
+          <p>Decide whether an importation opportunity makes business sense before you commit your money.</p>
         </article>
         <article>
-          <h3>How to build and sell the business</h3>
-          <p>Find and sell to parents, schools, crèches, teachers and other resellers.</p>
+          <h3>How to build and sell a Montessori / learning-resource business</h3>
+          <p>Identify and sell to parents, schools, crèches, teachers, resellers and other buyers.</p>
         </article>
       </div>
     </div>
@@ -325,15 +329,15 @@
   <section class="bg-cream" id="curriculum">
     <div class="wrap narrow">
       <div class="head">
-        <h2>Seven days, one complete sourcing cycle</h2>
-        <p class="lead">Each recorded lesson is built around doing, so you can apply it to your own products as you go.</p>
+        <h2>Training overview</h2>
+        <p class="lead">The core training is recorded and released across the course. Each lesson combines watching, practising, asking questions and implementing.</p>
       </div>
       <ol class="days">
-        <li><span class="day">Day 1</span><div><h3>Foundation and mindset</h3><p>Understand the sourcing landscape, set your goals, and prepare your business for importing.</p></div></li>
-        <li><span class="day">Day 2</span><div><h3>Finding and vetting suppliers</h3><p>Search the platforms, spot red flags, and verify suppliers before you send money.</p></div></li>
-        <li><span class="day">Day 3</span><div><h3>Landed cost and pricing</h3><p>Calculate product cost, shipping, duty and your true landed cost, then price for profit.</p></div></li>
-        <li><span class="day">Day 4</span><div><h3>Ordering and payment</h3><p>Negotiate, place orders, pay safely, and track your shipment from factory to door.</p></div></li>
-        <li><span class="day">Day 5</span><div><h3>Scaling and repeat sourcing</h3><p>Build a repeatable system, manage supplier relationships, and grow your catalogue.</p></div></li>
+        <li><span class="day">Day 1</span><div><h3>Understanding Montessori &amp; learning resources + product research</h3></div></li>
+        <li><span class="day">Day 2</span><div><h3>Major Chinese Platforms + Product Sourcing + Supplier Evaluation + Negotiation</h3></div></li>
+        <li><span class="day">Day 3</span><div><h3>Alipay + payment methods + placing your first order</h3></div></li>
+        <li><span class="day">Day 4</span><div><h3>Shipping from China + Chinese warehouses + CBM + shipping costs</h3></div></li>
+        <li><span class="day">Day 5</span><div><h3>Landed cost + pricing + profit + selling + building your business</h3></div></li>
       </ol>
     </div>
   </section>
@@ -343,17 +347,17 @@
     <div class="wrap narrow">
       <div class="head">
         <h2>This masterclass is for you if…</h2>
-        <p class="lead">It's aimed at both active sellers and beginners.</p>
+        <p class="lead">Whether you're already selling children's products or just getting started, this training will help you understand how to source Montessori and learning resources from China.</p>
       </div>
       <ul class="checks">
-        <li>You sell children's books</li>
-        <li>You sell toys</li>
-        <li>You sell Montessori materials</li>
-        <li>You sell other educational resources</li>
-        <li>You are an existing reseller</li>
-        <li>You are a parent building a Montessori business</li>
-        <li>You supply schools with learning resources</li>
-        <li>You are new to sourcing from China</li>
+        <li>Children's book vendors</li>
+        <li>Toy sellers</li>
+        <li>Montessori-material sellers</li>
+        <li>Educational-resource vendors</li>
+        <li>Existing resellers</li>
+        <li>Parents building a Montessori business</li>
+        <li>School-resource suppliers</li>
+        <li>Beginners new to China sourcing</li>
       </ul>
     </div>
   </section>
@@ -362,23 +366,41 @@
   <section class="bg-cream">
     <div class="wrap narrow">
       <div class="head">
-        <h2>Your {{ ngn_label }} includes</h2>
-        <p class="lead">Watch, practise, ask questions, then implement. Live sessions follow each lesson to answer questions and help with practical issues.</p>
+        <h2>Your {{ ngn_label }} investment includes</h2>
       </div>
       <ul class="checks">
-        <li>Recorded lessons, released across the course</li>
-        <li>12 months of student community access</li>
-        <li>The Montessori &amp; Learning Resources Importation Workbook</li>
-        <li>Checklists and templates for product research, supplier evaluation and supplier communication</li>
-        <li>CBM, landed-cost and profit calculators</li>
+        <li>7 recorded days, 3 days guide to the actual buying</li>
+        <li>12-month student community access</li>
+        <li>Montessori &amp; Learning Resources Importation Workbook</li>
+        <li>Product research checklist</li>
+        <li>Supplier evaluation checklist</li>
+        <li>Supplier communication templates</li>
+        <li>CBM calculator</li>
+        <li>Landed-cost calculator</li>
+        <li>Profit calculator</li>
+        <li>Importation checklist</li>
         <li>Practical assignments</li>
-        <li>Scheduled live Q&amp;A and practical support sessions</li>
+        <li>Scheduled live Q&amp;A / practical support sessions</li>
       </ul>
     </div>
   </section>
 
-  {% if ghs_enabled %}
+  <!-- PRACTICAL LEARNING -->
   <section class="bg-card">
+    <div class="wrap narrow">
+      <div class="head">
+        <h2>Not just theory. Practical learning.</h2>
+        <p class="lead">The core training is recorded and released across the course. Each lesson combines:</p>
+      </div>
+      <div class="flow">
+        <span>Watch</span><i>→</i><span>Practise</span><i>→</i><span>Ask questions</span><i>→</i><span>Implement</span>
+      </div>
+      <p class="fine">Scheduled live sessions are used to answer questions and help you work through practical issues after watching each lesson.</p>
+    </div>
+  </section>
+
+  {% if ghs_enabled %}
+  <section class="bg-cream">
     <div class="wrap narrow">
       <div class="ghana">
         <h2 style="margin-bottom:10px">Paying from Ghana?</h2>
@@ -390,20 +412,21 @@
   {% endif %}
 
   <!-- ENROLL -->
-  <section class="bg-card" id="enroll">
+  <section class="bg-cream" id="enroll">
     <div class="wrap narrow">
       <div class="enroll-card">
-        <h2>Join the masterclass</h2>
+        <h2>Ready to learn how to import smarter?</h2>
         <p class="price">{{ ngn_label }}</p>
-        <p class="price-note">One-time payment</p>
+        <p class="price-note">One payment · 12 months access</p>
+        <p class="enroll-note">Your {{ ngn_label }} registration gives you 12 months of access to the official student community and course resources.</p>
         <dl class="enroll-meta">
           <div><dt>Starts</dt><dd>{{ course.start_label }}</dd></div>
           <div><dt>Duration</dt><dd>7 recorded days, 3 days guide to the actual buying</dd></div>
           <div><dt>Access</dt><dd>12 months</dd></div>
           <div><dt>Classroom</dt><dd>Telegram, with live Q&amp;A</dd></div>
         </dl>
-        <a class="btn btn-brown btn-lg btn-block" href="{{ paystack_url }}">Enroll now</a>
-        <p class="fine center" style="margin-top:12px">Secure payment through Paystack.</p>
+        <a class="btn btn-brown btn-lg btn-block" href="{{ paystack_url }}">Secure my seat — {{ ngn_label }}</a>
+        <p class="fine center" style="margin-top:12px">Payment is processed securely online.</p>
 
         <form class="recover" action="{% url 'success' %}" method="get">
           <label for="ref">Already paid? Enter your payment reference to get your access.</label>
@@ -425,14 +448,14 @@
       <div class="faq">
         <details open>
           <summary>Is the class live or recorded?</summary>
-          <p>The core lessons are recorded and released on schedule. Live Q&amp;A and practical support sessions run alongside them.</p>
+          <p>The core lessons are recorded and released on schedule, with live Q&amp;A and practical support sessions.</p>
         </details>
         <details open>
-          <summary>Do I need previous importing experience?</summary>
+          <summary>Do I need previous importation experience?</summary>
           <p>No. Beginners are taken step by step, and existing vendors can sharpen their skills.</p>
         </details>
         <details open>
-          <summary>Will I learn about the major Chinese sourcing platforms?</summary>
+          <summary>Will I learn from major Chinese sourcing &amp; trading platforms?</summary>
           <p>Yes. It is a major part of the training.</p>
         </details>
         <details open>
@@ -440,16 +463,20 @@
           <p>Yes, including setup, payment and common account issues.</p>
         </details>
         <details open>
-          <summary>Is shipping covered?</summary>
+          <summary>Will shipping be covered?</summary>
           <p>Yes, including shipping methods, warehouses, shipping lines, CBM and cost calculations.</p>
         </details>
         <details open>
-          <summary>Will I learn to calculate profit?</summary>
+          <summary>Will I learn how to calculate profit?</summary>
           <p>Yes. You cover landed cost, selling price and expected profit before you commit money.</p>
         </details>
         <details open>
           <summary>How long do I have access?</summary>
           <p>12 months.</p>
+        </details>
+        <details open>
+          <summary>How much is the masterclass?</summary>
+          <p>{{ ngn_label }}, one payment.</p>
         </details>
         <details open>
           <summary>What happens after I pay?</summary>
@@ -460,10 +487,48 @@
           <p>No. It also suits book vendors, toy sellers, educational-resource businesses and aspiring resellers.</p>
         </details>
       </div>
-      <p class="fine" style="margin-top:28px">The course teaches process and skill. It does not guarantee supplier approval, Alipay approval, profit or business success. The Alipay guidance does not guarantee approval or recovery of any account.</p>
     </div>
   </section>
 
+  <!-- WHAT THIS WILL HELP YOU DO -->
+  <section class="bg-cream">
+    <div class="wrap narrow">
+      <div class="head">
+        <h2>What this masterclass will help you do</h2>
+      </div>
+      <ul class="checks">
+        <li>Research before you buy</li>
+        <li>Compare suppliers</li>
+        <li>Understand MOQ</li>
+        <li>Calculate your real costs</li>
+        <li>Understand shipping</li>
+        <li>Make smarter purchasing decisions</li>
+        <li>Identify potential profit</li>
+        <li>Build your own sourcing process</li>
+      </ul>
+      <p class="fine" style="margin-top:28px">This masterclass teaches process and skill. It does not guarantee supplier approval, Alipay approval, profit, or business success — your results depend on your own execution.</p>
+    </div>
+  </section>
+
+  <!-- CLOSING CALL TO ACTION -->
+  <section class="bg-card">
+    <div class="wrap narrow closing">
+      <div class="head" style="margin-left:auto;margin-right:auto">
+        <p class="eyebrow">Montessori &amp; Learning Resources Masterclass</p>
+        <h2>Stop guessing. Start sourcing with knowledge.</h2>
+        <p class="lead">Learn how to research products, evaluate suppliers, understand shipping, calculate your real costs and make smarter sourcing decisions before you commit your money.</p>
+      </div>
+      <ul class="checks">
+        <li>7 Recorded Days</li>
+        <li>12 Months Access</li>
+        <li>Practical Learning</li>
+      </ul>
+      <p class="fine">Registration</p>
+      <p class="price">{{ ngn_label }}</p>
+      <a class="btn btn-brown btn-lg" href="{{ paystack_url }}">Secure My Seat →</a>
+      <p class="trust">🔒 Secure payment • One payment • 12 months access</p>
+    </div>
+  </section>
 
 </main>
 
