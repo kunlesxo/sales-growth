@@ -198,6 +198,16 @@
   footer.foot a:hover{color:var(--brown-mid);text-decoration:underline}
   footer.foot .legal{font-size:12.5px;color:var(--muted);opacity:.85}
 
+  /* Checklists and FAQ */
+  .checks{list-style:none;margin:0;padding:0;display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+  .checks li{position:relative;padding:14px 18px 14px 44px;background:var(--cream);border:1px solid var(--line);border-radius:12px;color:var(--ink)}
+  .checks li::before{content:"";position:absolute;left:20px;top:21px;width:10px;height:6px;border-left:2px solid var(--brown-mid);border-bottom:2px solid var(--brown-mid);transform:rotate(-45deg)}
+  .faq details{border-bottom:1px solid var(--line);padding:18px 0}
+  .faq details:first-child{border-top:1px solid var(--line)}
+  .faq summary{cursor:pointer;font-weight:700;color:var(--brown-deep);list-style:none;font-size:1.02rem}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq p{margin:10px 0 0;color:var(--muted)}
+
   @media (prefers-reduced-motion: reduce){
     html{scroll-behavior:auto}
     *,*::before,*::after{animation:none !important;transition:none !important}
@@ -269,21 +279,50 @@
   <section class="bg-card">
     <div class="wrap">
       <div class="head">
-        <h2>A working process, not theory</h2>
-        <p class="lead">You leave with a method you can repeat on every order, from the first supplier search to goods arriving at your door.</p>
+        <h2>Stop buying blind. Learn the process.</h2>
+        <p class="lead">Many vendors want to sell these products but don't know how to find suppliers, vet them, pay them, ship goods or judge profit. This masterclass covers each step, so you learn to import smarter.</p>
       </div>
+      <p class="eyebrow" style="margin-bottom:20px">10 things you will learn</p>
       <div class="outcomes">
         <article>
-          <h3>Buy direct</h3>
-          <p>Find and vet suppliers yourself, so the margin stays in your business.</p>
+          <h3>How to source Montessori products directly from China</h3>
+          <p>Identify the products and where and how they are sourced.</p>
         </article>
         <article>
-          <h3>Know your landed cost</h3>
-          <p>Add up product, shipping and duty for every item before you commit to buy.</p>
+          <h3>How to find and evaluate suppliers</h3>
+          <p>Search major Chinese sourcing and trading platforms, compare suppliers, and check MOQ and supplier details.</p>
         </article>
         <article>
-          <h3>Import with a clear process</h3>
-          <p>Follow each step from order to delivery, filmed in a real working space.</p>
+          <h3>How to negotiate better prices</h3>
+          <p>Communicate with suppliers and negotiate by quantity.</p>
+        </article>
+        <article>
+          <h3>How to work around high MOQs</h3>
+          <p>Understand minimum orders, and how group buying makes larger orders possible.</p>
+        </article>
+        <article>
+          <h3>How to set up Alipay and pay suppliers</h3>
+          <p>Link your account, make the payment, and know what to watch for.</p>
+        </article>
+        <article>
+          <h3>What to do when Alipay has issues</h3>
+          <p>Experience-based guidance on verification and restrictions. It does not guarantee approval or account recovery.</p>
+        </article>
+        <article>
+          <h3>How to ship from China to Nigeria</h3>
+          <p>Shipping methods, Chinese warehouses, consolidation, and how to evaluate shipping companies.</p>
+        </article>
+        <article>
+          <h3>How to calculate CBM and your true landed cost</h3>
+          <p>Work out product volume, shipping cost and the total landed cost.</p>
+        </article>
+        <article>
+          <h3>How to calculate your selling price and profit</h3>
+          <p>Decide whether an import is worth it before you commit your money.</p>
+        </article>
+        <article>
+          <h3>How to build and sell the business</h3>
+          <p>Find and sell to parents, schools, crèches, teachers and other resellers.</p>
         </article>
       </div>
     </div>
@@ -303,6 +342,45 @@
         <li><span class="day">Day 4</span><div><h3>Ordering and payment</h3><p>Negotiate, place orders, pay safely, and track your shipment from factory to door.</p></div></li>
         <li><span class="day">Day 5</span><div><h3>Scaling and repeat sourcing</h3><p>Build a repeatable system, manage supplier relationships, and grow your catalogue.</p></div></li>
       </ol>
+    </div>
+  </section>
+
+  <!-- WHO IT'S FOR -->
+  <section class="bg-card">
+    <div class="wrap narrow">
+      <div class="head">
+        <h2>This masterclass is for you if…</h2>
+        <p class="lead">It's aimed at both active sellers and beginners.</p>
+      </div>
+      <ul class="checks">
+        <li>You sell children's books</li>
+        <li>You sell toys</li>
+        <li>You sell Montessori materials</li>
+        <li>You sell other educational resources</li>
+        <li>You are an existing reseller</li>
+        <li>You are a parent building a Montessori business</li>
+        <li>You supply schools with learning resources</li>
+        <li>You are new to sourcing from China</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- WHAT IS INCLUDED -->
+  <section class="bg-cream">
+    <div class="wrap narrow">
+      <div class="head">
+        <h2>Your {{ ngn_label }} includes</h2>
+        <p class="lead">Watch, practise, ask questions, then implement. Live sessions follow each lesson to answer questions and help with practical issues.</p>
+      </div>
+      <ul class="checks">
+        <li>Recorded lessons, released across the course</li>
+        <li>12 months of student community access</li>
+        <li>The Montessori &amp; Learning Resources Importation Workbook</li>
+        <li>Checklists and templates for product research, supplier evaluation and supplier communication</li>
+        <li>CBM, landed-cost and profit calculators</li>
+        <li>Practical assignments</li>
+        <li>Scheduled live Q&amp;A and practical support sessions</li>
+      </ul>
     </div>
   </section>
 
@@ -332,7 +410,7 @@
           <div><dt>Classroom</dt><dd>Telegram, with live Q&amp;A</dd></div>
         </dl>
         <a class="btn btn-brown btn-lg btn-block" href="{{ paystack_url }}">Enroll now</a>
-        <p class="fine center" style="margin-top:12px">Pay by card or bank transfer through Paystack.</p>
+        <p class="fine center" style="margin-top:12px">Secure payment through Paystack.</p>
 
         <form class="recover" action="{% url 'success' %}" method="get">
           <label for="ref">Already paid? Enter your payment reference to get your access.</label>
@@ -342,6 +420,54 @@
           </div>
         </form>
       </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="bg-card">
+    <div class="wrap narrow">
+      <div class="head">
+        <h2>Questions people ask</h2>
+      </div>
+      <div class="faq">
+        <details>
+          <summary>Is the class live or recorded?</summary>
+          <p>The core lessons are recorded and released on schedule. Live Q&amp;A and practical support sessions run alongside them.</p>
+        </details>
+        <details>
+          <summary>Do I need previous importing experience?</summary>
+          <p>No. Beginners are taken step by step, and existing vendors can sharpen their skills.</p>
+        </details>
+        <details>
+          <summary>Will I learn about the major Chinese sourcing platforms?</summary>
+          <p>Yes. It is a major part of the training.</p>
+        </details>
+        <details>
+          <summary>Will I learn Alipay?</summary>
+          <p>Yes, including setup, payment and common account issues.</p>
+        </details>
+        <details>
+          <summary>Is shipping covered?</summary>
+          <p>Yes, including shipping methods, warehouses, shipping lines, CBM and cost calculations.</p>
+        </details>
+        <details>
+          <summary>Will I learn to calculate profit?</summary>
+          <p>Yes. You cover landed cost, selling price and expected profit before you commit money.</p>
+        </details>
+        <details>
+          <summary>How long do I have access?</summary>
+          <p>12 months.</p>
+        </details>
+        <details>
+          <summary>What happens after I pay?</summary>
+          <p>Payment is confirmed electronically, and you receive instructions to join the official Telegram student community.</p>
+        </details>
+        <details>
+          <summary>Is this only for Montessori businesses?</summary>
+          <p>No. It also suits book vendors, toy sellers, educational-resource businesses and aspiring resellers.</p>
+        </details>
+      </div>
+      <p class="fine" style="margin-top:28px">The course teaches process and skill. It does not guarantee supplier approval, Alipay approval, profit or business success. The Alipay guidance does not guarantee approval or recovery of any account.</p>
     </div>
   </section>
 
