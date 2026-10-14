@@ -59,6 +59,11 @@ def success(request):
 
 
 @require_GET
+def refund_policy(request):
+    return render(request, "academy/refund.html", _course_context())
+
+
+@require_GET
 def health(request):
     return HttpResponse("ok")
 

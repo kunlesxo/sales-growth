@@ -1,0 +1,190 @@
+{% load static %}<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Refund Policy | {{ course.brand }}</title>
+<meta name="description" content="How refunds work for the {{ course.name }}: the 72-hour refund window, how to request a refund, and how refunds are processed.">
+<meta name="theme-color" content="#FBF3E8">
+<link rel="icon" href="{% static 'academy/img/sales-logo-transparent.png' %}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --brown-deep:#2E1A11;
+    --brown:#4A2A1C;
+    --brown-mid:#6B4632;
+    --peach:#F1C7A3;
+    --peach-soft:#F8DFC4;
+    --cream:#FBF3E8;
+    --cream-card:#FFFCF7;
+    --ink:#2A1C14;
+    --muted:#6B5645;
+    --line:rgba(42,28,20,.12);
+    --serif:"Fraunces",Georgia,"Times New Roman",serif;
+    --sans:"Karla",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:var(--sans);background:var(--cream);color:var(--ink);line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden;display:flex;flex-direction:column;min-height:100vh;min-height:100dvh}
+  img{max-width:100%;display:block}
+  a{color:var(--brown-mid)}
+  p{margin:0 0 12px}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 20px;width:100%}
+  @media(min-width:900px){.wrap{padding:0 28px}}
+
+  /* Header: solid cream and still while scrolling */
+  header.top{position:sticky;top:0;z-index:50;background:var(--cream);border-bottom:1px solid var(--line)}
+  .bar{display:flex;align-items:center;justify-content:space-between;gap:12px;height:72px}
+  .logo{height:46px;width:auto}
+  .back{font-weight:700;font-size:14px;color:var(--brown-mid);text-decoration:none;white-space:nowrap}
+  .back:hover{text-decoration:underline}
+  @media(min-width:900px){.bar{height:80px}.logo{height:54px}}
+
+  main{flex:1;padding:36px 0 56px}
+  @media(min-width:900px){main{padding:64px 0 88px}}
+  .doc{max-width:760px;margin:0 auto}
+  .eyebrow{font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--brown-mid);margin:0 0 10px}
+  h1{font-family:var(--serif);color:var(--brown-deep);font-weight:600;line-height:1.15;margin:0 0 14px;font-size:clamp(1.9rem,6vw,2.6rem)}
+  .intro{color:var(--muted);font-size:1.02rem;margin:0 0 28px}
+
+  /* The refund window, shown as a dark card */
+  .window{background:var(--brown-deep);color:var(--peach-soft);border-radius:16px;padding:26px 24px;margin:0 0 36px}
+  .window .eyebrow{color:var(--peach);margin-bottom:6px}
+  .window strong{display:block;font-family:var(--serif);font-size:1.5rem;font-weight:600;color:#fff;margin-bottom:8px;line-height:1.2}
+  .window p{margin:0}
+
+  section.rule{border-top:1px solid var(--line);padding:26px 0 6px}
+  h2{font-family:var(--serif);color:var(--brown-deep);font-size:1.25rem;font-weight:600;line-height:1.3;margin:0 0 10px;display:flex;gap:12px;align-items:baseline}
+  h2 span{font-family:var(--sans);font-size:13px;font-weight:700;color:var(--brown-mid);min-width:1.2em}
+  section.rule p{color:var(--ink)}
+  ul.steps{margin:8px 0 14px;padding-left:20px}
+  ul.steps li{margin-bottom:6px}
+  .important{background:var(--cream-card);border:1px solid var(--line);border-left:4px solid var(--brown-deep);border-radius:12px;padding:16px 18px;margin:16px 0 4px}
+  .important strong{display:block;color:var(--brown-deep);margin-bottom:4px}
+  .important p{margin:0;color:var(--muted)}
+  .more{margin-top:34px;padding-top:24px;border-top:1px solid var(--line)}
+  .more p{color:var(--muted)}
+
+  /* Footer */
+  footer.foot{background:var(--cream);border-top:1px solid var(--line);color:var(--muted);padding:40px 0 calc(32px + env(safe-area-inset-bottom));font-size:14px}
+  footer.foot .logo{height:46px;margin-bottom:14px}
+  footer.foot .foot-name{font-family:var(--serif);color:var(--brown-deep);font-size:18px;font-weight:600;margin:0 0 4px}
+  footer.foot p{margin:0}
+  footer.foot .links{display:flex;flex-wrap:wrap;gap:12px 24px;margin:20px 0;padding-top:20px;border-top:1px solid var(--line)}
+  footer.foot a{color:var(--brown-deep);font-weight:700;text-decoration:none}
+  footer.foot a:hover{color:var(--brown-mid);text-decoration:underline}
+  footer.foot .legal{font-size:12.5px;opacity:.85}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap bar">
+    <a href="{% url 'landing' %}" aria-label="{{ course.brand }}">
+      <img class="logo" src="{% static 'academy/img/sales-logo-transparent.png' %}" alt="{{ course.brand }}">
+    </a>
+    <a class="back" href="{% url 'landing' %}">Back to the course</a>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <article class="doc">
+      <p class="eyebrow">{{ course.brand }}</p>
+      <h1>Refund Policy</h1>
+      <p class="intro">Our refund policy explains when a payment may be refunded, how to submit a refund request, and what happens after the refund period has expired.</p>
+
+      <div class="window">
+        <p class="eyebrow">Refund window</p>
+        <strong>72 hours after you join</strong>
+        <p>Refund requests must be submitted within 72 hours of joining the Telegram student group. Once the 72-hour period has passed, the payment is considered non-refundable, subject to applicable law and exceptional service-related circumstances.</p>
+      </div>
+
+      <section class="rule">
+        <h2><span>1</span>Refund eligibility</h2>
+        <p>Sales Growth Academy allows refund requests within 72 hours of joining the Telegram student group.</p>
+        <p>To be considered, your refund request must be received within the 72-hour refund window.</p>
+      </section>
+
+      <section class="rule">
+        <h2><span>2</span>After 72 hours</h2>
+        <p>Once 72 hours have passed from the time you joined the Telegram student group, the payment becomes non-refundable.</p>
+        <p>This applies even where a participant changes their mind, misses a training session, experiences a scheduling conflict, or does not make use of the available training materials.</p>
+        <div class="important">
+          <strong>Important</strong>
+          <p>Please make sure you fully understand the programme, price and access terms before completing your payment.</p>
+        </div>
+      </section>
+
+      <section class="rule">
+        <h2><span>3</span>Duplicate payments</h2>
+        <p>If you are accidentally charged more than once for the same registration, please contact us promptly with your payment references so the duplicate transaction can be reviewed.</p>
+      </section>
+
+      <section class="rule">
+        <h2><span>4</span>Service or access issues</h2>
+        <p>If your payment was successful but you do not receive the promised course or community access, contact us as soon as possible so we can investigate and correct the issue.</p>
+        <p>Where Sales Growth Academy is unable to provide a material part of the paid service, an appropriate remedy may be considered.</p>
+      </section>
+
+      <section class="rule">
+        <h2><span>5</span>How to request a refund</h2>
+        <p>To request a refund within the eligible 72-hour period, contact Sales Growth Academy with the following details:</p>
+        <ul class="steps">
+          <li>Your full name</li>
+          <li>The email address or phone number used during registration</li>
+          <li>Your payment reference or receipt</li>
+          <li>The name of the programme</li>
+          <li>The reason for your refund request</li>
+        </ul>
+      </section>
+
+      <section class="rule">
+        <h2><span>6</span>Refund processing</h2>
+        <p>Approved refunds will normally be returned through the original payment method where possible.</p>
+        <p>Processing time may depend on the payment provider or financial institution used for the transaction.</p>
+      </section>
+
+      <section class="rule">
+        <h2><span>7</span>Course and community access</h2>
+        <p>Where a refund is approved, the related registration, course access and student-community access may be cancelled.</p>
+        <p>Participants who receive a refund will no longer be entitled to benefits connected to that registration.</p>
+      </section>
+
+      <section class="rule">
+        <h2><span>8</span>Payment disputes</h2>
+        <p>We encourage participants to contact Sales Growth Academy first so that payment or access issues can be investigated and resolved promptly.</p>
+      </section>
+
+      <section class="rule">
+        <h2><span>9</span>Applicable rights</h2>
+        <p>Nothing in this policy is intended to remove or limit any right or remedy that cannot legally be excluded under applicable Nigerian law.</p>
+      </section>
+
+      <div class="more">
+        <h2>Need more information?</h2>
+        <p>For more information about refunds, cancellations, payment issues and related terms, contact Sales Growth Academy{% if support_url %} on <a href="{{ support_url }}" target="_blank" rel="noopener noreferrer">WhatsApp</a>{% endif %}.</p>
+      </div>
+    </article>
+  </div>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <img class="logo" src="{% static 'academy/img/sales-logo-transparent.png' %}" alt="{{ course.brand }}">
+    <p class="foot-name">{{ course.brand }}</p>
+    <p>{{ course.name }}</p>
+    <div class="links">
+      <a href="https://www.instagram.com/salesgrowth_academy" target="_blank" rel="noopener noreferrer">Instagram</a>
+      <a href="https://www.facebook.com/share/1Dtz6ctwdK/" target="_blank" rel="noopener noreferrer">Facebook</a>
+      {% if support_url %}<a href="{{ support_url }}" target="_blank" rel="noopener noreferrer">WhatsApp</a>{% endif %}
+      <a href="{% url 'refund_policy' %}">Refund policy</a>
+    </div>
+    <p class="legal">Trading name: Sales Growth Academy · Legal entity: Books Roundabout Nigeria Limited</p>
+    <p class="legal" style="margin-top:6px">© 2026 Sales Growth Academy. All rights reserved.</p>
+  </div>
+</footer>
+
+</body>
+</html>

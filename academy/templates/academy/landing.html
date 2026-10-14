@@ -176,13 +176,6 @@
   .recover input{flex:1 1 200px;padding:13px 16px;border:1px solid rgba(42,28,20,.22);border-radius:12px;font:inherit;background:#fff;color:var(--ink);transition:border-color .3s var(--ease),box-shadow .3s var(--ease)}
   .recover input:focus{outline:none;border-color:var(--brown-mid);box-shadow:0 0 0 4px rgba(241,199,163,.45)}
 
-  /* Refund */
-  .refund-card{background:var(--cream-card);border:1px solid var(--line);border-left:5px solid var(--brown-deep);border-radius:16px;padding:28px}
-  .refund-card p{color:var(--muted);margin:0 0 12px;font-size:16px}
-  .refund-card p:last-child{margin-bottom:0}
-  .refund-card strong{color:var(--brown-deep)}
-  .refund-card a{color:var(--brown-mid);font-weight:700}
-
   /* Pay bar: fixed to the bottom and always in place. It does not slide or fade in. */
   .sticky-pay{position:fixed;left:0;right:0;bottom:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 20px calc(12px + env(safe-area-inset-bottom));background:var(--cream-card);border-top:1px solid var(--line)}
   .sticky-pay span{font-weight:700;color:var(--brown-deep);font-size:15px}
@@ -405,7 +398,7 @@
         <p class="price-note">One-time payment</p>
         <dl class="enroll-meta">
           <div><dt>Starts</dt><dd>{{ course.start_label }}</dd></div>
-          <div><dt>Duration</dt><dd>7 recorded days, plus a 3-day guide to the actual buying</dd></div>
+          <div><dt>Duration</dt><dd>7 recorded days, 3 days guide to the actual buying</dd></div>
           <div><dt>Access</dt><dd>12 months</dd></div>
           <div><dt>Classroom</dt><dd>Telegram, with live Q&amp;A</dd></div>
         </dl>
@@ -471,20 +464,6 @@
     </div>
   </section>
 
-  <!-- REFUND POLICY -->
-  <section class="bg-cream" id="refund">
-    <div class="wrap narrow">
-      <div class="head">
-        <p class="eyebrow">Refund policy</p>
-        <h2>Refunds within 72 hours of joining</h2>
-      </div>
-      <div class="refund-card">
-        <p>You can request a refund within <strong>72 hours of joining the Telegram student group</strong>.</p>
-        <p>Once you have joined the group and 72 hours have passed, refunds are no longer available.</p>
-        {% if support_url %}<p>To request a refund, contact support on <a href="{{ support_url }}" target="_blank" rel="noopener noreferrer">WhatsApp</a>.</p>{% endif %}
-      </div>
-    </div>
-  </section>
 
 </main>
 
@@ -502,7 +481,7 @@
       <a href="https://www.instagram.com/salesgrowth_academy" target="_blank" rel="noopener noreferrer">Instagram</a>
       <a href="https://www.facebook.com/share/1Dtz6ctwdK/" target="_blank" rel="noopener noreferrer">Facebook</a>
       {% if support_url %}<a href="{{ support_url }}" target="_blank" rel="noopener noreferrer">WhatsApp</a>{% endif %}
-      <a href="#refund">Refund policy</a>
+      <a href="{% url 'refund_policy' %}">Refund policy</a>
     </div>
     <p class="legal">Trading name: Sales Growth Academy · Legal entity: Books Roundabout Nigeria Limited</p>
     <p class="legal" style="margin-top:6px">© 2026 Sales Growth Academy. All rights reserved.</p>
