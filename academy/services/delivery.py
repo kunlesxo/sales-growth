@@ -54,7 +54,5 @@ def deliver(chat_id, enrollment, intro, fresh=False):
         "",
         f"Your access is valid for {settings.COURSE['access_months']} months, until "
         f"{enrollment.access_expires_at:%d %B %Y}.",
-        "If a link does not work, tap Get New Links below.",
     ]
-    buttons.append([{"text": "Get New Links", "callback_data": f"fresh:{reference}"}])
     return telegram.send_message(chat_id, "\n".join(lines), buttons)

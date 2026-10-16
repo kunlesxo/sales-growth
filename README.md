@@ -10,7 +10,7 @@ Django backend and landing page. A student pays on Paystack, the payment is veri
 | `academy/services/paystack.py` | Verifies transactions with Paystack and checks the webhook signature |
 | `academy/services/access.py` | The rules: amount and currency checks, Telegram identity, idempotency, 12-month expiry, revoke and restore |
 | `academy/services/delivery.py` | Sends each student their own one-use join links |
-| `academy/bot.py` | Telegram bot: `/start <reference>`, Check Payment Again, Get New Links |
+| `academy/bot.py` | Telegram bot: `/start <reference>`, Check Payment Again |
 | `academy/admin.py` | Admin: search by email, reference or Telegram ID; revoke and restore actions |
 | `academy/management/commands/` | `expire_access` (hourly), `setup_telegram`, `ensure_admin` |
 | `academy/tests/` | Tests for payment rules, idempotency, expiry, signatures and duplicate Telegram updates |
@@ -92,8 +92,8 @@ The Telegram chat IDs and the bot username are fixed in `config/settings.py`. Th
 2. Paystack redirects to `/success/?reference=...`. The page asks Paystack to verify the reference. It shows **PAYMENT SUCCESSFUL** only when Paystack confirms it.
 3. **GET MY TELEGRAM ACCESS** opens `t.me/Salesgrowthacademyaccessbot?start=<reference>`.
 4. The bot checks the reference with Paystack again, then ties the payment to that Telegram account. The first connection starts the 12 months.
-5. The bot sends one-use join links, one per space. Each link expires after 24 hours and admits one person.
-6. Pressing the link again changes nothing. Old links are reused until they are used. **Get New Links** replaces them (max 10 a day).
+5. The bot sends a one-use join link to the classroom. The link expires after 24 hours and admits one person.
+6. Pressing the link again changes nothing. The old link is reused until it is used.
 7. If the student closes the browser, they can enter their reference on the landing page or open `/success/?reference=...` later.
 
 ### Rules that protect the money and the group
@@ -123,4 +123,4 @@ Students are rows in Postgres with indexes on status, expiry and Telegram ID, an
 
 - The second-image section and the banner use the image files you add. Their content is not generated.
 - Telegram removes a student with a ban followed by an unban. This works for channels and groups where the bot is an admin, and the student can rejoin with a new link.
-- Telegram does not report when a join link is used, so "Get New Links" is the way to recover a link that stopped working.
+- Telegram does not report when a join link is used. If a student's link stops working, the admin sends a fresh one with the action **Restore access and send fresh join links**.
