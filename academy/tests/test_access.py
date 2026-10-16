@@ -127,7 +127,7 @@ class ClaimTests(TestCase):
         self.paystack(return_value=tx(status="reversed"))  # overrides the patch above for this call
         access.sync_payment("SGA-TEST-0001")
         self.assertEqual(Enrollment.objects.get().status, Enrollment.Status.REVOKED)
-        self.assertEqual(remove.call_count, 2)  # removed from classroom and discussion
+        self.assertEqual(remove.call_count, 1)  # removed from the classroom
 
     def test_expiry_removes_members_and_marks_expired(self):
         self.paystack(return_value=tx())
@@ -137,7 +137,7 @@ class ClaimTests(TestCase):
         self.assertEqual(access.expire_due(), 1)
         self.assertEqual(access.expire_due(), 0)  # second run changes nothing
         self.assertEqual(Enrollment.objects.get().status, Enrollment.Status.EXPIRED)
-        self.assertEqual(remove.call_count, 2)
+        self.assertEqual(remove.call_count, 1)
 
     def test_unused_links_are_reused_and_one_per_space(self):
         self.paystack(return_value=tx())

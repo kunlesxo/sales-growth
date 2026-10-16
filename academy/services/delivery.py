@@ -10,7 +10,6 @@ log = logging.getLogger(__name__)
 
 SPACE_LABELS = {
     "classroom": ("Classroom", "JOIN CLASSROOM"),
-    "discussion": ("Discussion & Q&A group", "JOIN DISCUSSION & Q&A GROUP"),
 }
 
 
@@ -44,7 +43,7 @@ def deliver(chat_id, enrollment, intro, fresh=False):
 
     lines = [intro, ""]
     buttons = []
-    for space in access.JOIN_SPACES:
+    for space in access.SPACES:
         label, button = SPACE_LABELS[space]
         url = links.get(space)
         if url:

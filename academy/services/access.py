@@ -17,8 +17,7 @@ from .telegram import TelegramError
 
 log = logging.getLogger(__name__)
 
-SPACES = ("classroom", "discussion")  # every space the bot can remove a student from
-JOIN_SPACES = ("classroom",)  # the only spaces students are sent links for; the discussion group is added from the waiting class
+SPACES = ("classroom",)  # the waiting classroom, the only Telegram group the bot manages
 MAX_LINKS_PER_DAY = 10
 ACTIVE = Enrollment.Status.ACTIVE
 REVOKED = Enrollment.Status.REVOKED
@@ -30,7 +29,9 @@ class LinkLimitReached(Exception):
 
 
 def chat_for(space):
-    return settings.CLASSROOM_CHAT_ID if space == "classroom" else settings.DISCUSSION_CHAT_ID
+    if space != "classroom":
+        raise ValueError(f"no Telegram group for space {space!r}")
+    return settings.CLASSROOM_CHAT_ID
 
 
 def audit(action, reference="", detail=""):
@@ -155,7 +156,7 @@ def issue_links(enrollment, fresh=False):
     if fresh and enrollment.invite_links.filter(created_at__gte=now - timedelta(days=1)).count() >= MAX_LINKS_PER_DAY:
         raise LinkLimitReached()
     out = {}
-    for space in JOIN_SPACES:
+    for space in SPACES:
         chat = chat_for(space)
         if enrollment.telegram_user_id and telegram.is_member(chat, enrollment.telegram_user_id):
             out[space] = None
@@ -176,10 +177,13 @@ def issue_links(enrollment, fresh=False):
 
 
 def _retire(link):
-    try:
-        telegram.revoke_invite_link(chat_for(link.space), link.url)
-    except TelegramError:
-        log.warning("could not revoke invite link %s", link.pk)
+    # Links for a space the bot no longer manages (the old discussion group) are not revoked here.
+    # They expire on their own after 24 hours.
+    if link.space in SPACES:
+        try:
+            telegram.revoke_invite_link(chat_for(link.space), link.url)
+        except TelegramError:
+            log.warning("could not revoke invite link %s", link.pk)
     link.is_active = False
     link.save(update_fields=["is_active"])
 

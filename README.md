@@ -1,6 +1,6 @@
 # Sales Growth Academy: Montessori & Learning Resources Masterclass
 
-Django backend and landing page. A student pays on Paystack, the payment is verified with Paystack, their Telegram account is tied to that payment, and they get 12 months of access to the classroom channel and the discussion group. Nobody confirms anything by hand.
+Django backend and landing page. A student pays on Paystack, the payment is verified with Paystack, their Telegram account is tied to that payment, and they get 12 months of access to the classroom. Nobody confirms anything by hand.
 
 ## What is in the box
 
@@ -102,7 +102,7 @@ The Telegram chat IDs and the bot username are fixed in `config/settings.py`. Th
 - The Paystack reference is the key: a payment is stored once, and one payment gives one enrollment.
 - One enrollment is tied to one Telegram account, and one Telegram account is tied to one purchase.
 - Webhook signatures are checked with HMAC-SHA512 before anything is read. Telegram webhooks must include the secret token, and each update is handled once.
-- A reversed payment revokes access at the next check, and the student is removed from both spaces.
+- A reversed payment revokes access at the next check, and the student is removed from the classroom.
 
 ## Admin
 
