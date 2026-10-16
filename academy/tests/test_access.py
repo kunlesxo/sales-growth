@@ -14,7 +14,7 @@ from django.utils import timezone
 from academy.models import Enrollment, Payment
 from academy.services import access
 
-PRICE = 3_500_000
+PRICE = settings.COURSE["price_ngn_kobo"]  # follows the configured price, so these tests hold at any price
 USER = {"id": 555, "username": "ada", "first_name": "Ada"}
 OTHER = {"id": 777, "username": "bola", "first_name": "Bola"}
 NO_SSL = override_settings(SECURE_SSL_REDIRECT=False)
@@ -40,15 +40,15 @@ class JudgeTests(SimpleTestCase):
     @override_settings(COURSE={**settings.COURSE, "price_ghs_pesewas": 0})
     def test_fee_margin_qualifies(self):
         # Paystack adds its fee on top, so a slightly higher amount is still the right purchase.
-        self.assertEqual(access.judge(tx(amount=3_600_000)), (True, ""))
+        self.assertEqual(access.judge(tx(amount=PRICE * 103 // 100)), (True, ""))
 
     @override_settings(COURSE={**settings.COURSE, "price_ghs_pesewas": 0})
     def test_too_high_is_rejected(self):
-        self.assertEqual(access.judge(tx(amount=4_000_000))[1], "amount_too_high")
+        self.assertEqual(access.judge(tx(amount=PRICE * 110 // 100))[1], "amount_too_high")
 
     @override_settings(COURSE={**settings.COURSE, "price_ghs_pesewas": 0})
     def test_too_low_is_rejected(self):
-        self.assertEqual(access.judge(tx(amount=100_000))[1], "amount_too_low")
+        self.assertEqual(access.judge(tx(amount=PRICE - 1))[1], "amount_too_low")
 
     @override_settings(COURSE={**settings.COURSE, "price_ghs_pesewas": 0})
     def test_failed_status_is_rejected(self):

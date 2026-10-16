@@ -109,7 +109,9 @@ if not DEBUG:
 # Prices are in minor units: NGN kobo (35,000 naira = 3,500,000) and GHS pesewas.
 # GHS stays off (0) until you set PRICE_GHS_PESEWAS and confirm GHS is enabled on the Paystack page.
 PAYSTACK_SECRET_KEY = env("PAYSTACK_SECRET_KEY")
-PAYSTACK_PAGE_URL = "https://paystack.shop/pay/-skbprjgs2"
+# Railway variables switch between test and live without a code change:
+#   PAYSTACK_SECRET_KEY (sk_test_… or sk_live_…), PAYSTACK_PAGE_URL (the matching payment page), PRICE_NGN_KOBO.
+PAYSTACK_PAGE_URL = env("PAYSTACK_PAGE_URL") or "https://paystack.shop/pay/-skbprjgs2"
 
 COURSE = {
     "brand": "Sales Growth Academy",
@@ -117,7 +119,8 @@ COURSE = {
     "instructor": "Abraham Precious",
     "start_label": "28 December 2026, 8:00 PM WAT",
     "start_iso": "2026-12-28T20:00:00+01:00",   # drives the countdown on the landing page
-    "price_ngn_kobo": 100_000,   # TEMPORARY live test price ₦1,000. Revert to 3_500_000 (₦35,000) after testing.
+    # Railway variable PRICE_NGN_KOBO: 100000 = ₦1,000 (test), 3500000 = ₦35,000 (launch price).
+    "price_ngn_kobo": int(env("PRICE_NGN_KOBO") or 100_000),
     "price_ghs_pesewas": int(env("PRICE_GHS_PESEWAS") or 0),
     "tolerance_pct": 5,          # Paystack fee is passed to the customer: accept up to 5% above price
     "access_months": 12,
