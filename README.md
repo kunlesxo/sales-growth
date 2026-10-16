@@ -1,6 +1,6 @@
 # Sales Growth Academy: Montessori & Learning Resources Masterclass
 
-Django backend and landing page. A student pays on Paystack, the payment is verified with Paystack, their Telegram account is tied to that payment, and they get 12 months of access to the classroom. Nobody confirms anything by hand.
+Django backend and landing page. A student pays on Paystack, the payment is verified with Paystack, their Telegram account is tied to that payment, and they get 12 months of access to the classroom and the discussion & Q&A group. Nobody confirms anything by hand.
 
 ## What is in the box
 
@@ -92,7 +92,7 @@ The Telegram chat IDs and the bot username are fixed in `config/settings.py`. Th
 2. Paystack redirects to `/success/?reference=...`. The page asks Paystack to verify the reference. It shows **PAYMENT SUCCESSFUL** only when Paystack confirms it.
 3. **GET MY TELEGRAM ACCESS** opens `t.me/Salesgrowthacademyaccessbot?start=<reference>`.
 4. The bot checks the reference with Paystack again, then ties the payment to that Telegram account. The first connection starts the 12 months.
-5. The bot sends a one-use join link to the classroom. The link expires after 24 hours and admits one person.
+5. The bot sends a one-use join link to the discussion & Q&A group. The link expires after 24 hours and admits one person.
 6. Pressing the link again changes nothing. The old link is reused until it is used.
 7. If the student closes the browser, they can enter their reference on the landing page or open `/success/?reference=...` later.
 
@@ -102,7 +102,7 @@ The Telegram chat IDs and the bot username are fixed in `config/settings.py`. Th
 - The Paystack reference is the key: a payment is stored once, and one payment gives one enrollment.
 - One enrollment is tied to one Telegram account, and one Telegram account is tied to one purchase.
 - Webhook signatures are checked with HMAC-SHA512 before anything is read. Telegram webhooks must include the secret token, and each update is handled once.
-- A reversed payment revokes access at the next check, and the student is removed from the classroom.
+- A reversed payment revokes access at the next check, and the student is removed from both groups.
 
 ## Admin
 

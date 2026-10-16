@@ -10,6 +10,7 @@ log = logging.getLogger(__name__)
 
 SPACE_LABELS = {
     "classroom": ("Classroom", "JOIN CLASSROOM"),
+    "discussion": ("Discussion & Q&A group", "JOIN DISCUSSION & Q&A GROUP"),
 }
 
 
@@ -23,7 +24,7 @@ def support_row():
 
 
 def deliver(chat_id, enrollment, intro, fresh=False):
-    """Send the join links for the waiting classroom. Each person gets their own one-use links."""
+    """Send the join links for the groups a student joins at purchase. Each person gets their own one-use links."""
     reference = enrollment.payment_id
     try:
         links = access.issue_links(enrollment, fresh=fresh)
@@ -43,7 +44,7 @@ def deliver(chat_id, enrollment, intro, fresh=False):
 
     lines = [intro, ""]
     buttons = []
-    for space in access.SPACES:
+    for space in access.JOIN_SPACES:
         label, button = SPACE_LABELS[space]
         url = links.get(space)
         if url:

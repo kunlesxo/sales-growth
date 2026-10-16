@@ -10,7 +10,7 @@ admin.site.site_title = "SGA Admin"
 admin.site.index_title = "Students & payments"
 
 
-@admin.action(description="Revoke access now (removes from the classroom)")
+@admin.action(description="Revoke access now (removes from classroom and discussion)")
 def revoke_access(modeladmin, request, queryset):
     count = 0
     for enrollment in queryset:
