@@ -119,8 +119,9 @@ COURSE = {
     "instructor": "Abraham Precious",
     "start_label": "28 December 2026, 8:00 PM WAT",
     "start_iso": "2026-12-28T20:00:00+01:00",   # drives the countdown on the landing page
-    # Railway variable PRICE_NGN_KOBO: 100000 = ₦1,000 (test), 3500000 = ₦35,000 (launch price).
-    "price_ngn_kobo": int(env("PRICE_NGN_KOBO") or 100_000),
+    # Launch price ₦35,000. Railway variable PRICE_NGN_KOBO overrides it, e.g. 100000 for a ₦1,000 test.
+    # Keep this equal to the amount on the Paystack payment page, or payments are rejected.
+    "price_ngn_kobo": int(env("PRICE_NGN_KOBO") or 3_500_000),
     "price_ghs_pesewas": int(env("PRICE_GHS_PESEWAS") or 0),
     "tolerance_pct": 5,          # Paystack fee is passed to the customer: accept up to 5% above price
     "access_months": 12,
