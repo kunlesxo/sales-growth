@@ -151,7 +151,7 @@ class ClaimTests(TestCase):
         first = access.issue_links(enrollment)
         second = access.issue_links(enrollment)
         self.assertEqual(first, second)
-        self.assertEqual(create.call_count, 2)  # one per space, however many times the student taps
+        self.assertEqual(create.call_count, 1)  # one per join space, however many times the student taps
 
     def test_fresh_links_replace_the_old_ones(self):
         self.paystack(return_value=tx())
@@ -165,9 +165,9 @@ class ClaimTests(TestCase):
         self.telegram("is_member", return_value=False)
         access.issue_links(enrollment)
         access.issue_links(enrollment, fresh=True)
-        self.assertEqual(create.call_count, 4)
-        self.assertEqual(revoke.call_count, 2)
-        self.assertEqual(enrollment.invite_links.filter(is_active=True).count(), 2)
+        self.assertEqual(create.call_count, 2)
+        self.assertEqual(revoke.call_count, 1)
+        self.assertEqual(enrollment.invite_links.filter(is_active=True).count(), 1)
 
 
 @NO_SSL

@@ -17,7 +17,8 @@ from .telegram import TelegramError
 
 log = logging.getLogger(__name__)
 
-SPACES = ("classroom", "discussion")
+SPACES = ("classroom", "discussion")  # every space the bot can remove a student from
+JOIN_SPACES = ("classroom",)  # the only spaces students are sent links for; the discussion group is added from the waiting class
 MAX_LINKS_PER_DAY = 10
 ACTIVE = Enrollment.Status.ACTIVE
 REVOKED = Enrollment.Status.REVOKED
@@ -154,7 +155,7 @@ def issue_links(enrollment, fresh=False):
     if fresh and enrollment.invite_links.filter(created_at__gte=now - timedelta(days=1)).count() >= MAX_LINKS_PER_DAY:
         raise LinkLimitReached()
     out = {}
-    for space in SPACES:
+    for space in JOIN_SPACES:
         chat = chat_for(space)
         if enrollment.telegram_user_id and telegram.is_member(chat, enrollment.telegram_user_id):
             out[space] = None
