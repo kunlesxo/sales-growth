@@ -36,6 +36,13 @@ def restore_access(modeladmin, request, queryset):
             messages.warning(request, f"{enrollment.email or enrollment.payment_id}: could not send links ({exc})")
 
 
+class SGAModelAdmin(admin.ModelAdmin):
+    """Shared styling for the student, payment and audit pages, so they stay inside the screen on phones."""
+
+    class Media:
+        css = {"all": ("academy/css/admin.css",)}
+
+
 class InviteLinkInline(admin.TabularInline):
     model = InviteLink
     extra = 0
@@ -47,7 +54,7 @@ class InviteLinkInline(admin.TabularInline):
 
 
 @admin.register(Enrollment)
-class EnrollmentAdmin(admin.ModelAdmin):
+class EnrollmentAdmin(SGAModelAdmin):
     list_display = ("email", "customer_name", "payment", "telegram_user_id", "telegram_username",
                     "status", "purchased_at", "access_expires_at")
     list_filter = ("status", "purchased_at")
@@ -80,7 +87,7 @@ class EnrollmentAdmin(admin.ModelAdmin):
 
 
 @admin.register(Payment)
-class PaymentAdmin(admin.ModelAdmin):
+class PaymentAdmin(SGAModelAdmin):
     list_display = ("reference", "email", "amount", "currency", "status", "qualifies", "reject_reason", "paid_at")
     list_filter = ("status", "qualifies", "currency")
     search_fields = ("reference", "email", "customer_name")
@@ -97,10 +104,16 @@ class PaymentAdmin(admin.ModelAdmin):
 
 
 @admin.register(AuditLog)
-class AuditLogAdmin(admin.ModelAdmin):
-    list_display = ("created_at", "action", "reference", "detail")
+class AuditLogAdmin(SGAModelAdmin):
+    list_display = ("created_at", "action", "reference", "short_detail")
     search_fields = ("reference", "action", "detail")
     readonly_fields = ("created_at", "action", "reference", "detail")
+
+    @admin.display(description="Detail")
+    def short_detail(self, obj):
+        """The full detail stays on the record page; the list shows a short line so the table does not overflow."""
+        text = obj.detail or ""
+        return text if len(text) <= 120 else text[:117] + "..."
 
     def has_add_permission(self, request):
         return False

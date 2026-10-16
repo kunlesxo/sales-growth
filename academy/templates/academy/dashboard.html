@@ -43,10 +43,12 @@
   .sga-btn{display:inline-block;padding:10px 18px;border-radius:6px;background:#2E1A11;color:#FBF3E8;font-weight:700;font-size:14px;text-decoration:none;white-space:nowrap}
   .sga-btn:hover{background:#4A2A1C;color:#FBF3E8}
 
-  .sga-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));margin:0 0 24px;background:#FFFCF7;border-top:1px solid rgba(42,28,20,.14);border-left:1px solid rgba(42,28,20,.14);border-radius:8px;overflow:hidden}
+  .sga-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin:0 0 24px;background:#FFFCF7;border-top:1px solid rgba(42,28,20,.14);border-left:1px solid rgba(42,28,20,.14);border-radius:8px;overflow:hidden}
   .sga-stat{padding:16px 18px;border-right:1px solid rgba(42,28,20,.14);border-bottom:1px solid rgba(42,28,20,.14)}
   .sga-stat-value{display:block;font-family:Fraunces,Georgia,serif;font-size:1.9rem;font-weight:600;line-height:1.1;color:#2E1A11;font-variant-numeric:tabular-nums}
   .sga-stat-label{display:block;margin-top:6px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#6B5645}
+  /* 7 stats on 4 columns: the last one spans two, so no row is left short */
+  .sga-stat:last-child{grid-column:span 2}
 
   .sga-panel{background:#FFFCF7;border:1px solid rgba(42,28,20,.14);border-radius:8px;overflow:hidden}
   .sga-panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px;border-bottom:1px solid rgba(42,28,20,.14)}
@@ -65,6 +67,7 @@
     .sga-head{flex-direction:column;align-items:stretch}
     .sga-btn{text-align:center}
     .sga-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .sga-stat:last-child{grid-column:1 / -1}
     .sga-stat{padding:14px}
     .sga-stat-value{font-size:1.6rem}
     .sga-panel-head{padding:12px 14px}
@@ -82,6 +85,11 @@
     .sga table.dash td::before{content:attr(data-label);flex:none;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#6B5645;text-align:left}
     .sga table.dash td.empty-cell{display:block;text-align:center;padding:24px 14px}
     .sga table.dash td.empty-cell::before{content:none}
+  }
+  /* Wide screens: all seven stats in one row */
+  @media (min-width:1000px){
+    .sga-stats{grid-template-columns:repeat(7,minmax(0,1fr))}
+    .sga-stat:last-child{grid-column:auto}
   }
 </style>
 {% endblock %}

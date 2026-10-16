@@ -1,0 +1,34 @@
+/* Django admin pages for students, payments and the audit log.
+   Keeps wide content inside its own box on phones: long text wraps, and a table that is still
+   too wide scrolls inside its box, not the whole page. */
+
+#content { max-width: 100%; box-sizing: border-box; }
+
+/* Lists */
+#changelist .results { overflow-x: auto; max-width: 100%; -webkit-overflow-scrolling: touch; }
+#result_list th,
+#result_list td { overflow-wrap: anywhere; }
+#changelist-search #searchbar { max-width: 100%; box-sizing: border-box; }
+
+/* Edit forms: inputs never wider than the screen, long values wrap */
+.change-form input,
+.change-form select,
+.change-form textarea,
+.vTextField,
+.vLargeTextField,
+.vURLField,
+.vDateField,
+.vTimeField,
+.vIntegerField { max-width: 100%; box-sizing: border-box; }
+.change-form .readonly,
+.field-url,
+.field-url .readonly { overflow-wrap: anywhere; word-break: break-word; }
+.inline-group td.field-url { max-width: 14em; }
+
+@media (max-width: 600px) {
+  #content { padding: 16px; }
+  #changelist-search #searchbar { width: 100%; }
+  .submit-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .submit-row a,
+  .submit-row input { flex: 1 1 auto; text-align: center; }
+}
